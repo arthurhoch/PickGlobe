@@ -13,11 +13,6 @@ public class Link {
     private String url;
     private String caminho;
 
-    public Link(String url, String caminho) {
-        this.url = url;
-        this.caminho = caminho;
-    }
-
     public String getUrl() {
         return url;
     }
