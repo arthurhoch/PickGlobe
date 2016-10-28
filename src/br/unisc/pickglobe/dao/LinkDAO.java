@@ -19,7 +19,7 @@ public class LinkDAO extends DAO<Link> {
     @Override
     public boolean create(Connection con, Link Link) throws SQLException {
         try {
-            String insertSQL = " insert into Extensao values ( ";
+            String insertSQL = " insert into Link values ( ";
             insertSQL += "codExtensao, " + Link.getCodExtensao();
             insertSQL += "tipoExtensao)" + Link.getCodExtensao();
             
