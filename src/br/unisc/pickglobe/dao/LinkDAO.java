@@ -20,8 +20,8 @@ public class LinkDAO extends DAO<Link> {
     public boolean create(Connection con, Link Link) throws SQLException {
         try {
             String insertSQL = " insert into Link values ( ";
-            insertSQL += "codExtensao, " + Link.getCodExtensao();
-            insertSQL += "tipoExtensao)" + Link.getCodExtensao();
+            insertSQL += "url, " + Link.getUrl();
+            insertSQL += "caminho)" + Link.getCaminho();
             
             PreparedStatement stm = 
                     con.prepareStatement(insertSQL);
@@ -30,7 +30,7 @@ public class LinkDAO extends DAO<Link> {
             stm.close();
             con.close();
             
-            System.out.println("Extensao adicionada com sucesso!");
+            System.out.println("Link adicionada com sucesso!");
             return true;
         } catch (Exception e) {
             System.out.println("Exessao: "+e.getMessage());
