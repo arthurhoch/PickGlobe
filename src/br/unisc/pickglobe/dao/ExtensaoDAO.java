@@ -3,8 +3,10 @@ package br.unisc.pickglobe.dao;
 import br.unisc.pickglobe.model.Extensao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -75,50 +77,53 @@ public class ExtensaoDAO extends DAO<Extensao>{
     
     @Override
     public Object get(Connection con, Extensao extensao) throws SQLException {
-        if (extensao.getTipoExtensao() != null){
-            String selectSQL = "SELECT * FROM Extensao";
+        try {
+            ArrayList<Extensao> listaExtensao = new ArrayList<>();
+
+            if (extensao.getTipoExtensao() != null){
+                String selectSQL = "SELECT * FROM Extensao";
+                selectSQL += "WHERE Extensao.tipoExtensao LIKE "+ extensao.getTipoExtensao();
+
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(selectSQL);
+
+
+                while (rs.next()) {
+                    Extensao ext = new Extensao();
+                    ext.setCodExtensao(rs.getInt("codExtensao"));
+                    ext.setTipoExtensao(rs.getString("tipoExtensao"));
+
+                    listaExtensao.add(ext);
+                }
+                
+                rs.close();
+                st.close();
+                con.close();
+            }else {
+                String selectSQL = "SELECT * FROM Extensao";
+
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(selectSQL);
+
+                while (rs.next()) {
+                    Extensao ext = new Extensao();
+                    ext.setCodExtensao(rs.getInt("codExtensao"));
+                    ext.setTipoExtensao(rs.getString("tipoExtensao"));
+
+                    listaExtensao.add(ext);
+                }
+                
+                rs.close();
+                st.close();
+                con.close();
+            }
+            return listaExtensao;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao buscar a extensao: "+e.getMessage());
+            return false;
         }
     }
-    
-    List<Cliente> listaClienteMunicipio = null;
-        
-        try {
-            con = Connect.Connect();
-            String query;
-            if (municipio.isEmpty()) {
-                query = "select c.nomecli, c.endereco, c.numero, c.bairro, c.cep, m.nomemun, m.uf\n" +
-                        "from Clientes c, Municipios m\n" +
-                        "where c.codmunicipio = m.codmunicipio";
-            } else {
-                query = "select c.nomecli, c.endereco, c.numero, c.bairro, c.cep, m.nomemun, m.uf\n" +
-                        "from Clientes c, Municipios m\n" +
-                        "where c.codmunicipio = m.codmunicipio\n"+
-                        "and m.nomemun like'%" + municipio + "%' ";
-            }
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            listaClienteMunicipio = new ArrayList<>();
-            while (rs.next()) {
-                Cliente f = new Cliente();
-                Municipio m = new Municipio();
-                f.setNome(rs.getString("nomecli"));
-                f.setEndereco(rs.getString("endereco"));
-                f.setNumero(rs.getInt("numero"));
-                f.setBairro(rs.getString("bairro"));
-                f.setCep(rs.getInt("cep"));
-                f.setNomeMunicipio(rs.getString("nomemun"));
-                f.setUf(rs.getString("uf"));
-                listaClienteMunicipio.add(f);
-                
-            }
-            rs.close();
-            st.close();
-            con.close();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        return listaClienteMunicipio;
-
-    
+  
     
 }
