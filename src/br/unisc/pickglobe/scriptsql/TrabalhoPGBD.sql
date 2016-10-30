@@ -18,9 +18,10 @@ USE `dbPGBD` ;
 -- Table `dbPGBD`.`Link`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dbPGBD`.`Link` (
-  `url` VARCHAR(255) NOT NULL,
+  `codLink` INT NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(255) NULL,
   `caminho` VARCHAR(45) NULL,
-  PRIMARY KEY (`url`))
+  PRIMARY KEY (`codLink`))
 ENGINE = InnoDB;
 
 
@@ -108,35 +109,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`LinkColeta`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`LinkColeta` (
-  `Coleta_codColeta` INT NOT NULL,
-  `Coleta_md5` VARCHAR(45) NOT NULL,
-  `Link_url` VARCHAR(255) NOT NULL,
-  `data` DATE NULL,
-  `hora` TIME NULL,
-  PRIMARY KEY (`Coleta_codColeta`, `Coleta_md5`, `Link_url`),
-  INDEX `fk_Links_has_Coleta_Coleta1_idx` (`Coleta_codColeta` ASC, `Coleta_md5` ASC),
-  INDEX `fk_LinkColeta_Link1_idx` (`Link_url` ASC),
-  CONSTRAINT `fk_Links_has_Coleta_Coleta1`
-    FOREIGN KEY (`Coleta_codColeta` , `Coleta_md5`)
-    REFERENCES `dbPGBD`.`Coleta` (`codColeta` , `md5`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_LinkColeta_Link1`
-    FOREIGN KEY (`Link_url`)
-    REFERENCES `dbPGBD`.`Link` (`url`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `dbPGBD`.`ListaPalavras`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavras` (
-  `codListaPalavras` INT NOT NULL AUTO_INCREMENT,
   `Site_codSites` INT NOT NULL,
   PRIMARY KEY (`Site_codSites`),
   CONSTRAINT `fk_ListaPalavras_Site1`
@@ -148,14 +123,80 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Nome_has_Link`
+-- Table `dbPGBD`.`ListaPalavrasNome`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Nome_has_Link` (
+CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasNome` (
+  `ListaPalavras_Site_codSites` INT NOT NULL,
   `Nome_codNomes` INT NOT NULL,
-  `Link_url` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`ListaPalavras_Site_codSites`, `Nome_codNomes`),
+  INDEX `fk_ListaPalavras_has_Nome_Nome1_idx` (`Nome_codNomes` ASC),
+  INDEX `fk_ListaPalavras_has_Nome_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
+  CONSTRAINT `fk_ListaPalavras_has_Nome_ListaPalavras1`
+    FOREIGN KEY (`ListaPalavras_Site_codSites`)
+    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ListaPalavras_has_Nome_Nome1`
+    FOREIGN KEY (`Nome_codNomes`)
+    REFERENCES `dbPGBD`.`Nome` (`codNomes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dbPGBD`.`ListaPalavrasPalavra`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasPalavra` (
+  `ListaPalavras_Site_codSites` INT NOT NULL,
+  `Palavra_codPalavras` INT NOT NULL,
+  PRIMARY KEY (`ListaPalavras_Site_codSites`, `Palavra_codPalavras`),
+  INDEX `fk_ListaPalavras_has_Palavra_Palavra1_idx` (`Palavra_codPalavras` ASC),
+  INDEX `fk_ListaPalavras_has_Palavra_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
+  CONSTRAINT `fk_ListaPalavras_has_Palavra_ListaPalavras1`
+    FOREIGN KEY (`ListaPalavras_Site_codSites`)
+    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ListaPalavras_has_Palavra_Palavra1`
+    FOREIGN KEY (`Palavra_codPalavras`)
+    REFERENCES `dbPGBD`.`Palavra` (`codPalavras`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dbPGBD`.`ColetaLink`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbPGBD`.`ColetaLink` (
+  `Coleta_codColeta` INT NOT NULL,
+  `Link_codLink` INT NOT NULL,
+  PRIMARY KEY (`Coleta_codColeta`, `Link_codLink`),
+  INDEX `fk_Coleta_has_Link_Link1_idx` (`Link_codLink` ASC),
+  INDEX `fk_Coleta_has_Link_Coleta1_idx` (`Coleta_codColeta` ASC),
+  CONSTRAINT `fk_Coleta_has_Link_Coleta1`
+    FOREIGN KEY (`Coleta_codColeta`)
+    REFERENCES `dbPGBD`.`Coleta` (`codColeta`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Coleta_has_Link_Link1`
+    FOREIGN KEY (`Link_codLink`)
+    REFERENCES `dbPGBD`.`Link` (`codLink`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `dbPGBD`.`NomeLink`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `dbPGBD`.`NomeLink` (
+  `Nome_codNomes` INT NOT NULL,
+  `Link_codLink` INT NOT NULL,
   `qtd` INT NULL,
-  PRIMARY KEY (`Nome_codNomes`, `Link_url`),
-  INDEX `fk_Nome_has_Link_Link1_idx` (`Link_url` ASC),
+  PRIMARY KEY (`Nome_codNomes`, `Link_codLink`),
+  INDEX `fk_Nome_has_Link_Link1_idx` (`Link_codLink` ASC),
   INDEX `fk_Nome_has_Link_Nome1_idx` (`Nome_codNomes` ASC),
   CONSTRAINT `fk_Nome_has_Link_Nome1`
     FOREIGN KEY (`Nome_codNomes`)
@@ -163,22 +204,22 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`Nome_has_Link` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Nome_has_Link_Link1`
-    FOREIGN KEY (`Link_url`)
-    REFERENCES `dbPGBD`.`Link` (`url`)
+    FOREIGN KEY (`Link_codLink`)
+    REFERENCES `dbPGBD`.`Link` (`codLink`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Palavra_has_Link`
+-- Table `dbPGBD`.`PalavraLink`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Palavra_has_Link` (
+CREATE TABLE IF NOT EXISTS `dbPGBD`.`PalavraLink` (
   `Palavra_codPalavras` INT NOT NULL,
-  `Link_url` VARCHAR(255) NOT NULL,
+  `Link_codLink` INT NOT NULL,
   `qtd` INT NULL,
-  PRIMARY KEY (`Palavra_codPalavras`, `Link_url`),
-  INDEX `fk_Palavra_has_Link_Link1_idx` (`Link_url` ASC),
+  PRIMARY KEY (`Palavra_codPalavras`, `Link_codLink`),
+  INDEX `fk_Palavra_has_Link_Link1_idx` (`Link_codLink` ASC),
   INDEX `fk_Palavra_has_Link_Palavra1_idx` (`Palavra_codPalavras` ASC),
   CONSTRAINT `fk_Palavra_has_Link_Palavra1`
     FOREIGN KEY (`Palavra_codPalavras`)
@@ -186,52 +227,8 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`Palavra_has_Link` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Palavra_has_Link_Link1`
-    FOREIGN KEY (`Link_url`)
-    REFERENCES `dbPGBD`.`Link` (`url`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `dbPGBD`.`Nome_has_ListaPalavras`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Nome_has_ListaPalavras` (
-  `Nome_codNomes` INT NOT NULL,
-  `ListaPalavras_Site_codSites` INT NOT NULL,
-  PRIMARY KEY (`Nome_codNomes`, `ListaPalavras_Site_codSites`),
-  INDEX `fk_Nome_has_ListaPalavras_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
-  INDEX `fk_Nome_has_ListaPalavras_Nome1_idx` (`Nome_codNomes` ASC),
-  CONSTRAINT `fk_Nome_has_ListaPalavras_Nome1`
-    FOREIGN KEY (`Nome_codNomes`)
-    REFERENCES `dbPGBD`.`Nome` (`codNomes`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Nome_has_ListaPalavras_ListaPalavras1`
-    FOREIGN KEY (`ListaPalavras_Site_codSites`)
-    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `dbPGBD`.`Palavra_has_ListaPalavras`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Palavra_has_ListaPalavras` (
-  `Palavra_codPalavras` INT NOT NULL,
-  `ListaPalavras_Site_codSites` INT NOT NULL,
-  PRIMARY KEY (`Palavra_codPalavras`, `ListaPalavras_Site_codSites`),
-  INDEX `fk_Palavra_has_ListaPalavras_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
-  INDEX `fk_Palavra_has_ListaPalavras_Palavra1_idx` (`Palavra_codPalavras` ASC),
-  CONSTRAINT `fk_Palavra_has_ListaPalavras_Palavra1`
-    FOREIGN KEY (`Palavra_codPalavras`)
-    REFERENCES `dbPGBD`.`Palavra` (`codPalavras`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Palavra_has_ListaPalavras_ListaPalavras1`
-    FOREIGN KEY (`ListaPalavras_Site_codSites`)
-    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
+    FOREIGN KEY (`Link_codLink`)
+    REFERENCES `dbPGBD`.`Link` (`codLink`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
