@@ -6,9 +6,11 @@
 package br.unisc.pickglobe.main;
 
 import br.unisc.pickglobe.core.Util;
+import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.Link;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,21 +25,23 @@ public class main {
      */
     public static void main(String[] args) {
 
-        try {
-            Util util = new Util();
-            LinkedList<Link> lista = null;
-            lista = (LinkedList<Link>) util.getLinksPage("http://terra.com.br");
+        Util util = new Util();
 
-            System.out.println("Teste");
+        Extensao extensao = new Extensao();
+        extensao.setCodExtensao(1);
+        extensao.setTipoExtensao(".html");
+        List<Extensao> extensoes = new LinkedList<>();
+        extensoes.add(extensao);
 
-            for (Link link : lista) {
-                System.out.println(link.getUrl());
-                System.out.println(link.getCaminho());
-            }
+        LinkedList<Link> lista = null;
+        lista = (LinkedList<Link>) util.getLinksPage("http://g1.com.br", extensoes);
 
-        } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        for (Link link : lista) {
+            System.out.println(link.getUrl());
+            System.out.println(link.getCaminho());
         }
+
+        //util.saveListLinks(lista);
 
     }
 
