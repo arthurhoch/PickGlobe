@@ -8,6 +8,7 @@ package br.unisc.pickglobe.core;
 import br.unisc.pickglobe.model.Link;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,34 +18,38 @@ import org.jsoup.select.Elements;
  *
  * @author arthurhoch
  */
-public class util {
-    
-    public String getPage(String url) throws IOException {
-        Document doc;        
-        
-        LinkedList<Link> links1 = new LinkedList<>();
-        
-        
+public class Util {
+
+    public List getLinksPage(String url) throws IOException {
+        Document doc;
+
+        List<Link> listaLinks = new LinkedList<>();
+        Md5helper md5 = new Md5helper();
+        String md5String;
+
         try {
             doc = Jsoup.connect(url).get();
             String asc = null;
             Elements links = doc.select("a[href]");
             for (Element link : links) {
-                asc =(link.attr("href"));
-                if (asc.contains("http")){
+                asc = (link.attr("href"));
+                if (asc.contains("http")) {
+
                     System.out.println(asc);
+
+                    if ((md5String = md5.string2md5(asc)) != null) {
+                        Link l = new Link();
+                        l.setUrl(asc);
+                        l.setCaminho("./" + md5.string2md5(asc) + "/");
+
+                        listaLinks.add(l);
+                    }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.printf("In: " + url, e);
         }
-        
-        return null;
-        
-        
+
+        return listaLinks;
     }
-    
-    
-    
-    
 }

@@ -10,6 +10,7 @@ package br.unisc.pickglobe.model;
  * @author arthurhoch
  */
 public class Link {
+
     private String url;
     private String caminho;
 

@@ -1,4 +1,3 @@
-
 package br.unisc.pickglobe.model;
 
 /**
@@ -6,6 +5,7 @@ package br.unisc.pickglobe.model;
  * @author will
  */
 public class Extensao {
+
     private int codExtensao;
     private String tipoExtensao;
 

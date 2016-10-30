@@ -1,4 +1,3 @@
-
 package br.unisc.pickglobe.controller;
 
 import br.unisc.pickglobe.dao.ExtensaoDAO;
@@ -7,18 +6,17 @@ import br.unisc.pickglobe.model.Extensao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
  * @author will
  */
 public class ExtensaoController {
-    
+
     private final ExtensaoDAO dao = new ExtensaoDAO();
     static PreparedStatement stmp = null;
-    
-    public boolean insert(Extensao extensao){
+
+    public boolean insert(Extensao extensao) {
         try {
             Connection con;
             con = Connect.Connect();
@@ -29,36 +27,36 @@ public class ExtensaoController {
             return false;
         }
     }
-    
-     public boolean update(Extensao extensao){
-         try {
+
+    public boolean update(Extensao extensao) {
+        try {
             Connection con;
             con = Connect.Connect();
             dao.update(con, extensao);
             return true;
-         } catch (Exception e) {
-             return false;
-         }
-     }
-     
-     public boolean delete(Extensao extensao){
-         try {
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean delete(Extensao extensao) {
+        try {
             Connection con;
             con = Connect.Connect();
             dao.delete(con, extensao);
             return true;
-         } catch (Exception e) {
-             return false;
-         }
-     }
-     
-     public Object select(Extensao extensao)throws SQLException{
-         try {
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Object select(Extensao extensao) throws SQLException {
+        try {
             Connection con;
             con = Connect.Connect();
             return dao.get(con, extensao);
-         } catch (Exception e) {
-             return false;
-         }
-     }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
