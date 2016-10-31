@@ -13,6 +13,15 @@ public class Link {
 
     private String url;
     private String caminho;
+    private String pagina;
+
+    public String getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(String pagina) {
+        this.pagina = pagina;
+    }
 
     public String getUrl() {
         return url;

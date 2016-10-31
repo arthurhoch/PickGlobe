@@ -8,11 +8,8 @@ package br.unisc.pickglobe.main;
 import br.unisc.pickglobe.core.Util;
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.Link;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,12 +33,13 @@ public class main {
         LinkedList<Link> lista = null;
         lista = (LinkedList<Link>) util.getLinksPage("http://g1.com.br", extensoes);
 
+        util.saveListLinks(lista, "g1");
+
         for (Link link : lista) {
             System.out.println(link.getUrl());
-            System.out.println(link.getCaminho());
-        }
+            System.out.println("Numero de palavras: " + util.contarPalavras(link, "casa"));
 
-        //util.saveListLinks(lista);
+        }
 
     }
 
