@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema dbPGBD
+-- Schema pickglobe
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema dbPGBD
+-- Schema pickglobe
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `dbPGBD` DEFAULT CHARACTER SET utf8 ;
-USE `dbPGBD` ;
+CREATE SCHEMA IF NOT EXISTS `pickglobe` DEFAULT CHARACTER SET utf8 ;
+USE `pickglobe` ;
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Link`
+-- Table `pickglobe`.`Link`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Link` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Link` (
   `codLink` INT NOT NULL AUTO_INCREMENT,
   `url` VARCHAR(255) NULL,
   `caminho` VARCHAR(45) NULL,
@@ -26,9 +26,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Site`
+-- Table `pickglobe`.`Site`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Site` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Site` (
   `codSites` INT NOT NULL AUTO_INCREMENT,
   `tempoColeta` TIME NULL,
   `url` VARCHAR(255) NULL,
@@ -39,9 +39,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Coleta`
+-- Table `pickglobe`.`Coleta`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Coleta` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Coleta` (
   `codColeta` INT NOT NULL AUTO_INCREMENT,
   `md5` VARCHAR(45) NULL,
   `Site_codSites` INT NOT NULL,
@@ -49,16 +49,16 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`Coleta` (
   INDEX `fk_Coleta_Site1_idx` (`Site_codSites` ASC),
   CONSTRAINT `fk_Coleta_Site1`
     FOREIGN KEY (`Site_codSites`)
-    REFERENCES `dbPGBD`.`Site` (`codSites`)
+    REFERENCES `pickglobe`.`Site` (`codSites`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Extensao`
+-- Table `pickglobe`.`Extensao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Extensao` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Extensao` (
   `codExtensoes` INT NOT NULL AUTO_INCREMENT,
   `tipoExtensao` VARCHAR(45) NULL,
   PRIMARY KEY (`codExtensoes`))
@@ -66,9 +66,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Palavra`
+-- Table `pickglobe`.`Palavra`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Palavra` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Palavra` (
   `codPalavras` INT NOT NULL AUTO_INCREMENT,
   `palavra` VARCHAR(45) NULL,
   `tipo` VARCHAR(45) NULL,
@@ -77,9 +77,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`Nome`
+-- Table `pickglobe`.`Nome`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`Nome` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`Nome` (
   `codNomes` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NULL,
   PRIMARY KEY (`codNomes`))
@@ -87,9 +87,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`ExtensaoSite`
+-- Table `pickglobe`.`ExtensaoSite`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`ExtensaoSite` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`ExtensaoSite` (
   `Extensoes_codExtensoes` INT NOT NULL,
   `Sites_codSites` INT NOT NULL,
   PRIMARY KEY (`Extensoes_codExtensoes`, `Sites_codSites`),
@@ -97,35 +97,35 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`ExtensaoSite` (
   INDEX `fk_Extensoes_has_Sites_Extensoes1_idx` (`Extensoes_codExtensoes` ASC),
   CONSTRAINT `fk_Extensoes_has_Sites_Extensoes1`
     FOREIGN KEY (`Extensoes_codExtensoes`)
-    REFERENCES `dbPGBD`.`Extensao` (`codExtensoes`)
+    REFERENCES `pickglobe`.`Extensao` (`codExtensoes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Extensoes_has_Sites_Sites1`
     FOREIGN KEY (`Sites_codSites`)
-    REFERENCES `dbPGBD`.`Site` (`codSites`)
+    REFERENCES `pickglobe`.`Site` (`codSites`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`ListaPalavras`
+-- Table `pickglobe`.`ListaPalavras`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavras` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`ListaPalavras` (
   `Site_codSites` INT NOT NULL,
   PRIMARY KEY (`Site_codSites`),
   CONSTRAINT `fk_ListaPalavras_Site1`
     FOREIGN KEY (`Site_codSites`)
-    REFERENCES `dbPGBD`.`Site` (`codSites`)
+    REFERENCES `pickglobe`.`Site` (`codSites`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`ListaPalavrasNome`
+-- Table `pickglobe`.`ListaPalavrasNome`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasNome` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`ListaPalavrasNome` (
   `ListaPalavras_Site_codSites` INT NOT NULL,
   `Nome_codNomes` INT NOT NULL,
   PRIMARY KEY (`ListaPalavras_Site_codSites`, `Nome_codNomes`),
@@ -133,21 +133,21 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasNome` (
   INDEX `fk_ListaPalavras_has_Nome_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
   CONSTRAINT `fk_ListaPalavras_has_Nome_ListaPalavras1`
     FOREIGN KEY (`ListaPalavras_Site_codSites`)
-    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
+    REFERENCES `pickglobe`.`ListaPalavras` (`Site_codSites`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ListaPalavras_has_Nome_Nome1`
     FOREIGN KEY (`Nome_codNomes`)
-    REFERENCES `dbPGBD`.`Nome` (`codNomes`)
+    REFERENCES `pickglobe`.`Nome` (`codNomes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`ListaPalavrasPalavra`
+-- Table `pickglobe`.`ListaPalavrasPalavra`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasPalavra` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`ListaPalavrasPalavra` (
   `ListaPalavras_Site_codSites` INT NOT NULL,
   `Palavra_codPalavras` INT NOT NULL,
   PRIMARY KEY (`ListaPalavras_Site_codSites`, `Palavra_codPalavras`),
@@ -155,21 +155,21 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`ListaPalavrasPalavra` (
   INDEX `fk_ListaPalavras_has_Palavra_ListaPalavras1_idx` (`ListaPalavras_Site_codSites` ASC),
   CONSTRAINT `fk_ListaPalavras_has_Palavra_ListaPalavras1`
     FOREIGN KEY (`ListaPalavras_Site_codSites`)
-    REFERENCES `dbPGBD`.`ListaPalavras` (`Site_codSites`)
+    REFERENCES `pickglobe`.`ListaPalavras` (`Site_codSites`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ListaPalavras_has_Palavra_Palavra1`
     FOREIGN KEY (`Palavra_codPalavras`)
-    REFERENCES `dbPGBD`.`Palavra` (`codPalavras`)
+    REFERENCES `pickglobe`.`Palavra` (`codPalavras`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`ColetaLink`
+-- Table `pickglobe`.`ColetaLink`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`ColetaLink` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`ColetaLink` (
   `Coleta_codColeta` INT NOT NULL,
   `Link_codLink` INT NOT NULL,
   PRIMARY KEY (`Coleta_codColeta`, `Link_codLink`),
@@ -177,21 +177,21 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`ColetaLink` (
   INDEX `fk_Coleta_has_Link_Coleta1_idx` (`Coleta_codColeta` ASC),
   CONSTRAINT `fk_Coleta_has_Link_Coleta1`
     FOREIGN KEY (`Coleta_codColeta`)
-    REFERENCES `dbPGBD`.`Coleta` (`codColeta`)
+    REFERENCES `pickglobe`.`Coleta` (`codColeta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Coleta_has_Link_Link1`
     FOREIGN KEY (`Link_codLink`)
-    REFERENCES `dbPGBD`.`Link` (`codLink`)
+    REFERENCES `pickglobe`.`Link` (`codLink`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`NomeLink`
+-- Table `pickglobe`.`NomeLink`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`NomeLink` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`NomeLink` (
   `Nome_codNomes` INT NOT NULL,
   `Link_codLink` INT NOT NULL,
   `qtd` INT NULL,
@@ -200,21 +200,21 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`NomeLink` (
   INDEX `fk_Nome_has_Link_Nome1_idx` (`Nome_codNomes` ASC),
   CONSTRAINT `fk_Nome_has_Link_Nome1`
     FOREIGN KEY (`Nome_codNomes`)
-    REFERENCES `dbPGBD`.`Nome` (`codNomes`)
+    REFERENCES `pickglobe`.`Nome` (`codNomes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Nome_has_Link_Link1`
     FOREIGN KEY (`Link_codLink`)
-    REFERENCES `dbPGBD`.`Link` (`codLink`)
+    REFERENCES `pickglobe`.`Link` (`codLink`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `dbPGBD`.`PalavraLink`
+-- Table `pickglobe`.`PalavraLink`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `dbPGBD`.`PalavraLink` (
+CREATE TABLE IF NOT EXISTS `pickglobe`.`PalavraLink` (
   `Palavra_codPalavras` INT NOT NULL,
   `Link_codLink` INT NOT NULL,
   `qtd` INT NULL,
@@ -223,12 +223,12 @@ CREATE TABLE IF NOT EXISTS `dbPGBD`.`PalavraLink` (
   INDEX `fk_Palavra_has_Link_Palavra1_idx` (`Palavra_codPalavras` ASC),
   CONSTRAINT `fk_Palavra_has_Link_Palavra1`
     FOREIGN KEY (`Palavra_codPalavras`)
-    REFERENCES `dbPGBD`.`Palavra` (`codPalavras`)
+    REFERENCES `pickglobe`.`Palavra` (`codPalavras`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Palavra_has_Link_Link1`
     FOREIGN KEY (`Link_codLink`)
-    REFERENCES `dbPGBD`.`Link` (`codLink`)
+    REFERENCES `pickglobe`.`Link` (`codLink`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
