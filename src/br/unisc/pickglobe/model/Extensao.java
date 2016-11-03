@@ -21,7 +21,7 @@ public class Extensao {
         return tipoExtensao;
     }
 
-    public void setTipoExtensao(String nomeExtensao) {
-        this.tipoExtensao = nomeExtensao;
+    public void setTipoExtensao(String tipoExtensao) {
+        this.tipoExtensao = tipoExtensao;
     }
 }
