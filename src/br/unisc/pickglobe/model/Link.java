@@ -11,6 +11,7 @@ package br.unisc.pickglobe.model;
  */
 public class Link {
     private int codLink;
+    private String pagina;
 
     public int getCodLink() {
         return codLink;
@@ -36,5 +37,13 @@ public class Link {
 
     public void setCaminho(String caminho) {
         this.caminho = caminho;
+    }
+
+    public String getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(String pagina) {
+        this.pagina = pagina;
     }
 }
