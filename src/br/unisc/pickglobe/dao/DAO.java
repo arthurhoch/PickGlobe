@@ -18,6 +18,6 @@ public abstract class DAO<T> {
     public abstract boolean create (Connection con, T objeto) throws SQLException;
     public abstract boolean update (Connection con, T objeto) throws SQLException;
     public abstract boolean delete (Connection con, T objeto) throws SQLException;
-    public abstract Object get (Connection con, T objeto) throws SQLException;
+    public abstract Object get (Connection con, int cod) throws SQLException;
     
 }

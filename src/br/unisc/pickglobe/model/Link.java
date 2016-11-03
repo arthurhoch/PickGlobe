@@ -10,6 +10,15 @@ package br.unisc.pickglobe.model;
  * @author arthurhoch
  */
 public class Link {
+    private int codLink;
+
+    public int getCodLink() {
+        return codLink;
+    }
+
+    public void setCodLink(int codLink) {
+        this.codLink = codLink;
+    }
     private String url;
     private String caminho;
 

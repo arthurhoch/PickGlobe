@@ -7,6 +7,7 @@ import br.unisc.pickglobe.model.Extensao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,13 +53,26 @@ public class ExtensaoController {
          }
      }
      
-     public Object select(Extensao extensao)throws SQLException{
+     public Object select(int codExtensao)throws SQLException{
          try {
             Connection con;
             con = Connect.Connect();
-            return dao.get(con, extensao);
+            return dao.get(con, codExtensao);
          } catch (Exception e) {
-             return false;
+             e.printStackTrace();
+             return null;
+         }
+     }
+     
+     public ArrayList<Extensao> selectAll(){
+         try {
+            ArrayList<Extensao> listaExtensao = new ArrayList();
+            Connection con;
+            con = Connect.Connect();
+            listaExtensao = dao.listExtensoes(con);
+            return listaExtensao;
+         } catch (Exception e) {
+             return null;
          }
      }
 }
