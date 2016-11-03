@@ -220,11 +220,12 @@ public class EditarSite extends javax.swing.JFrame {
 
         String URL = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
         String novaURL = jTextPane1.getText();
-        String novaLista = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        String novaListaPalavras = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        String novaListaExtensoes = jComboBox3.getItemAt(jComboBox3.getSelectedIndex());
         int intervaloConsulta = jSlider1.getValue();
 
-        if (!URL.isEmpty() && !novaURL.isEmpty() && !novaLista.isEmpty()) {
-            action.atualizarSite(URL, novaURL, novaLista, intervaloConsulta);
+        if (!URL.isEmpty() && !novaURL.isEmpty() && !novaListaPalavras.isEmpty() && !novaListaExtensoes.isEmpty()) {
+            action.atualizarSite(URL, novaURL, novaListaPalavras, novaListaExtensoes, intervaloConsulta);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Verifique os campos");

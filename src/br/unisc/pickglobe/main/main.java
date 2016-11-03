@@ -7,9 +7,9 @@ package br.unisc.pickglobe.main;
 
 import br.unisc.pickglobe.controller.ExtensaoController;
 import br.unisc.pickglobe.model.Extensao;
+import br.unisc.pickglobe.view.TelaPrincipal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -22,7 +22,7 @@ public class main {
      */
     public static void main(String[] args) throws SQLException {
         
-        
+        /*
         ExtensaoController controllerExtensao = new ExtensaoController();
         
         Extensao ext = new Extensao();
@@ -52,6 +52,10 @@ public class main {
         ext4.setCodExtensao(20);
         ext4.setTipoExtensao("dddd Alterada");
         controllerExtensao.update(ext4);
+        */
+        
+        TelaPrincipal tp = new TelaPrincipal();
+        tp.setVisible(true);
         
     }
 
