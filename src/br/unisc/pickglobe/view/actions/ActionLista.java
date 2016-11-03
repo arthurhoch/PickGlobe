@@ -11,27 +11,23 @@ package br.unisc.pickglobe.view.actions;
  */
 public class ActionLista extends Action {
     
-    
-    
-
-
     public void deletarLista(String nomeLista) {
         System.out.println("Deletadar lista " + nomeLista);
     }
 
-    public void addPalavras(String[] palavras) {
+    public void addPalavras(String nomeLista, String[] palavras) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void rmPalavras(String[] palavras) {
+    public void rmPalavras(String nomeLista, String[] palavras) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void addArquivoPalavras(String arquivoAdd) {
+    public void addArquivoPalavras(String nomeLista, String arquivoAdd) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void rmArquivoPalavras(String arquivoRm) {
+    public void rmArquivoPalavras(String nomeLista, String arquivoRm) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

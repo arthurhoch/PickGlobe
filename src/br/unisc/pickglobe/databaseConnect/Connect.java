@@ -14,8 +14,8 @@ public class Connect {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/dbPGBD?"
-                            + "user=root&password=root");            
+                    "jdbc:mysql://localhost:3306/pickglobe?"
+                            + "user=pickglobe&password=pickglobe");            
 
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Seguinte erro ao tentar conectar: " + ex.getMessage());

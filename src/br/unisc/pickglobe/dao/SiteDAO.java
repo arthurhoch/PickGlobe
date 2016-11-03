@@ -118,6 +118,37 @@ public class SiteDAO extends DAO<Site>{
         }
     }
     
+    public Object get(Connection con, String URL) throws SQLException {
+        try {
+            String selectSQL = "SELECT * FROM Site ";
+            selectSQL += "WHERE Site.url = " + URL;
+            System.out.println(selectSQL);
+            
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(selectSQL);
+            Site site = new Site();
+            rs.next();
+            
+            site.setCodSites(rs.getInt("codSites"));
+            site.setTempoColeta(rs.getTimestamp("tempoColeta"));
+            site.setUrl(rs.getString("url"));
+            site.setStatus(rs.getInt("status"));
+            site.setDescricao(rs.getString("descricao"));
+
+
+            rs.close();
+            st.close();
+            con.close();
+
+            return site;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Excessao ao buscar o site: "+e.getMessage());
+            return null;
+        }
+    }
+    
     public ArrayList<Site> listSite(Connection con){
         try {
             ArrayList<Site> listaExtensao = new ArrayList<>();

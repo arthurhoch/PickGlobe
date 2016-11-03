@@ -5,6 +5,11 @@
  */
 package br.unisc.pickglobe.view.actions;
 
+import br.unisc.pickglobe.controller.SiteController;
+import br.unisc.pickglobe.model.Site;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author arthurhoch
@@ -12,21 +17,32 @@ package br.unisc.pickglobe.view.actions;
 public class ActionSite extends Action {
 
     public String[] getNomeSites() {
-        return new String[]{"Nome_de_um_site1", "Nome_de_um_site2"};
+        SiteController siteController = new SiteController();
+        List<Site> sites = siteController.selectAll();
+        
+        String sitesString = new String();
+        
+        for (Site site : sites) {
+            
+            if(sitesString.isEmpty())
+                sitesString += site.getUrl();
+            else
+                sitesString += ";" + site.getUrl();
+        }
+        
+        return sitesString.split(";");
     }
-    
-    public String[] getNomeExtensoes() {
-        return new String[]{"Extensao_1", "Extensao_2"};
-    }
-    
+
     public String[] getNomeExtensoes(String site) {
         /* Ordenar com a primeira exteção do site referente*/
         return getNomeExtensoes();
     }
-        
 
     public void criarSite(String URL, String nomeListaPalavras, int intervaloConsulta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Site site = new Site();
+
+        site.setUrl(URL);
+
     }
 
     public void atualizarSite(String URL, String novaURL, String novaLista, int intervaloConsulta) {
@@ -34,7 +50,15 @@ public class ActionSite extends Action {
     }
 
     public void deletarSite(String siteDeletar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            SiteController siteController = new SiteController();
+            Site site = (Site) siteController.select(siteDeletar);
+            siteController.delete(site);
+        } catch (SQLException ex) {
+            //Logger.getLogger(ActionSite.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {

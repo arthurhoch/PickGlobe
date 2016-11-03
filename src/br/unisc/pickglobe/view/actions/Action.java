@@ -15,4 +15,8 @@ public class Action {
         return new String[]{"Nome_de_uma_lista1", "Nome_de_uma_lista2"};
     }
 
+    public String[] getNomeExtensoes() {
+        return new String[]{"Extensao_1", "Extensao_2"};
+    }
+
 }

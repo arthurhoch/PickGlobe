@@ -308,11 +308,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        IncluirExtensao incluirExtensao = new IncluirExtensao();
+        incluirExtensao.setLocation(this.getX(), this.getY());
+        incluirExtensao.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+        EditarExtensao editarExtensao = new EditarExtensao();
+        editarExtensao.setLocation(this.getX(), this.getY());
+        editarExtensao.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

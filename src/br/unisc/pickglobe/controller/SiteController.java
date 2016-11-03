@@ -62,6 +62,17 @@ public class SiteController {
          }
      }
      
+     public Object select(String URL)throws SQLException{
+         try {
+            Connection con;
+            con = Connect.Connect();
+            return dao.get(con, URL);
+         } catch (Exception e) {
+             e.printStackTrace();
+             return null;
+         }
+     }
+     
      public ArrayList<Site> selectAll(){
          try {
             ArrayList<Site> listaSites = new ArrayList();

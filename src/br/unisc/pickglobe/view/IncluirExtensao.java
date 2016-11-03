@@ -6,15 +6,16 @@
 package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionExtensao;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author m93492
  */
 public class IncluirExtensao extends javax.swing.JFrame {
-    
+
     private ActionExtensao action;
-    
+
     /**
      * Creates new form IncluirExtensao
      */
@@ -41,7 +42,8 @@ public class IncluirExtensao extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextListaExtensoes = new javax.swing.JTextPane();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Incluir Extensão");
 
         jLabel1.setText("Digite as extensões separadas por ponto e virgula (;):");
 
@@ -116,9 +118,14 @@ public class IncluirExtensao extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nomeLista = jTextNomeLista.getText();
         String listaExtensoes = jTextListaExtensoes.getText();
-        
-        if(!nomeLista.isEmpty() && !listaExtensoes.isEmpty())
+
+        if (!nomeLista.isEmpty() && !listaExtensoes.isEmpty()) {
             action.criarListaExtensao(nomeLista, listaExtensoes.split(";"));
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Confira as informações");
+        }
+            
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

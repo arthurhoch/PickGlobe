@@ -269,7 +269,7 @@ public class EditarLista extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         
-        
+        String nomeLista = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         String listaAdd = jTextPane1.getText();
         String listaRm = jTextPane2.getText();
         String arquivoAdd = jTextPane3.getText();
@@ -277,20 +277,20 @@ public class EditarLista extends javax.swing.JFrame {
         
         if(listaAdd != null) {
             String[] palavras = listaAdd.split(";");
-            action.addPalavras(palavras);
+            action.addPalavras(nomeLista, palavras);
         }
         
         if(listaRm != null) {
             String[] palavras = listaRm.split(";");
-            action.rmPalavras(palavras);
+            action.rmPalavras(nomeLista, palavras);
         }
   
         if(arquivoAdd != null) {
-            action.addArquivoPalavras(arquivoAdd);
+            action.addArquivoPalavras(nomeLista, arquivoAdd);
         }
         
         if(arquivoRm != null) {
-            action.rmArquivoPalavras(arquivoRm);
+            action.rmArquivoPalavras(nomeLista, arquivoRm);
         }
         
         this.dispose();
