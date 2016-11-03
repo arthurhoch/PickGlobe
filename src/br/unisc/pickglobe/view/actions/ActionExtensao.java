@@ -14,5 +14,13 @@ public class ActionExtensao extends Action{
     public void criarListaExtensao(String nomeLista, String[] split) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public void atualizarListaExtensao(String nomeLista, String[] split) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getListaExtensoes(String itemAt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
