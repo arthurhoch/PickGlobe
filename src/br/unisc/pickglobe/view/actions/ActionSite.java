@@ -14,6 +14,10 @@ public class ActionSite extends Action {
     public String[] getNomeSites() {
         return new String[]{"Nome_de_um_site1", "Nome_de_um_site2"};
     }
+    
+    public String[] getNomeExtensoes() {
+        return new String[]{"Extensao_1", "Extensao_2"};
+    }
 
     public void criarSite(String URL, String nomeListaPalavras, int intervaloConsulta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -24,6 +28,10 @@ public class ActionSite extends Action {
     }
 
     public void deletarSite(String siteDeletar) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

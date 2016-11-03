@@ -97,7 +97,7 @@ public class Util {
 
         return 0;
     }
-
+    
     public int contarPalavrasSemcapitalizacao(Link link, String palavra) {
 
         int total = 0;
@@ -114,14 +114,14 @@ public class Util {
         return total;
     }
 
-    public static String capitalizar(String s) {
+    private static String capitalizar(String s) {
         if (s.length() == 0) {
             return s;
         }
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
-    public static String desCapitalizar(String s) {
+    private static String desCapitalizar(String s) {
         if (s.length() == 0) {
             return s;
         }
