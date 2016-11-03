@@ -8,6 +8,7 @@ package br.unisc.pickglobe.main;
 import br.unisc.pickglobe.core.Util;
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.Link;
+import br.unisc.pickglobe.view.TelaPrincipal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        /*
         Util util = new Util();
 
         Extensao extensao = new Extensao();
@@ -40,7 +41,10 @@ public class main {
             System.out.println("Numero de palavras: " + util.contarPalavras(link, "casa"));
 
         }
-
+        */
+        
+        new TelaPrincipal().setVisible(true);
+        
     }
 
 }
