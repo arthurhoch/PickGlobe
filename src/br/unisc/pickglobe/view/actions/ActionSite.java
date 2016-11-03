@@ -18,6 +18,12 @@ public class ActionSite extends Action {
     public String[] getNomeExtensoes() {
         return new String[]{"Extensao_1", "Extensao_2"};
     }
+    
+    public String[] getNomeExtensoes(String site) {
+        /* Ordenar com a primeira exteção do site referente*/
+        return getNomeExtensoes();
+    }
+        
 
     public void criarSite(String URL, String nomeListaPalavras, int intervaloConsulta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
