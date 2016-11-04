@@ -6,10 +6,14 @@
 package br.unisc.pickglobe.view.actions;
 
 import br.unisc.pickglobe.controller.PalavraJpaController;
+import br.unisc.pickglobe.controller.exceptions.IllegalOrphanException;
+import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.model.Palavra;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,13 +28,24 @@ public class ActionLista extends Action {
     }
 
     public void deletarLista(String nomeLista) {
-        int key = getKeyComboNomeListas(nomeLista);
-        
-        ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
-        
-        
-        
-        
+        try {
+            int key = getKeyComboNomeListas(nomeLista);
+            ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
+            deletarListaPalavra(listaPalavras.getPalavraList());
+            listaPalavrasJpaController.destroy(listaPalavras.getCodListaPalavras());
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void deletarListaPalavra(List<Palavra> palavras) {
+        for (Palavra palavra : palavras) {
+            try {
+                palavraJpaController.destroy(palavra.getCodPalavra());
+            } catch (IllegalOrphanException | NonexistentEntityException ex) {
+                Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void addPalavras(String nomeLista, String[] palavras) {
