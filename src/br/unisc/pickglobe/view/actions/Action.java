@@ -12,6 +12,7 @@ import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -56,7 +57,7 @@ public class Action {
         }
         return 0;
     }
-
+    
     public List<ComboItem> getNomeExtensoes() {
         List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
 
@@ -77,5 +78,14 @@ public class Action {
         }
         return 0;
     }
+    
+    public String calculateTime(long seconds) {
+            int day = (int)TimeUnit.SECONDS.toDays(seconds);        
+            long hours = TimeUnit.SECONDS.toHours(seconds) - (day *24);
+            long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds)* 60);
+            long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) *60);
+
+            return "Day " + day + " Hour " + hours + " Minute " + minute + " Seconds " + second;
+        }
 
 }
