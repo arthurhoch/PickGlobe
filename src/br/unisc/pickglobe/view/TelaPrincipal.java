@@ -280,7 +280,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        EditarSite editarSite = new EditarSite();
+        EditarSite editarSite = new EditarSite();                
         editarSite.setLocation(this.getX(), this.getY());
         editarSite.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem2ActionPerformed

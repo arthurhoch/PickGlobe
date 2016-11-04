@@ -19,15 +19,9 @@ import java.util.List;
 public class ActionSite extends Action {
 
     private SiteJpaController siteController;
-    
-    public ActionSite(){
+
+    public ActionSite() {
         this.siteController = new SiteJpaController(emf);
-    }
-    
-    public String[] getNomeSites() {
-        
-           
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public List<ComboItem> getNomeExtensoes(String site) {
@@ -45,20 +39,20 @@ public class ActionSite extends Action {
 
     public void criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {
         Site site = new Site();
-        
+
         int keyListaExtensoes = getKeyComboNomeExtensoes(nomeListaExtensoes);
-        
+
         int keyListaPalavras = getKeyComboNomeListas(nomeListaPalavras);
-        
+
         ListaExtensoes listaExtensoes = listaExtensoesJpaController.findListaExtensoes(keyListaExtensoes);
-        
+
         ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(keyListaPalavras);
-        
+
         site.setUrl(URL);
         site.setCodListaExtensoes(listaExtensoes);
         site.setCodListaPalavras(listaPalavras);
         site.setIntervaloColeta(intervaloConsulta);
-        
+
         siteController.create(site);
     }
 
