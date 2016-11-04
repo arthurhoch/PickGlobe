@@ -88,7 +88,7 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="*/"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem = action.getNomeListas();&#xa;&#xa;for(ComboItem item : listaComboItem) {&#xa;    jComboBox1.addItem(item.toString());&#xa;}&#xa;&#xa;&#xa;/*"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem = action.getNomeListas();&#xa;&#xa;for(ComboItem item : listaComboItem) {&#xa;    jComboBox1.addItem(item.toString());&#xa;}&#xa;&#xa;/*"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>

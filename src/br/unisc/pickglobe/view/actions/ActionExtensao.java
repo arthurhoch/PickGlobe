@@ -6,6 +6,7 @@
 package br.unisc.pickglobe.view.actions;
 
 import br.unisc.pickglobe.controller.ExtensaoJpaController;
+import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import java.util.LinkedList;
@@ -52,6 +53,8 @@ public class ActionExtensao extends Action {
 
         ListaExtensoes listaExtensoes = listaExtensoesJpaController.findListaExtensoes(key);
 
+        deletarExtensoes(listaExtensoes.getExtensaoList());
+
         listaExtensoes.setExtensaoList(arrayExtesao2List(split));
 
         try {
@@ -60,6 +63,16 @@ public class ActionExtensao extends Action {
             Logger.getLogger(ActionExtensao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void deletarExtensoes(List<Extensao> extensoes) {
+        for (Extensao extensao : extensoes) {
+            try {
+                extensaoJpaController.destroy(extensao.getCodExtensao());
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(ActionExtensao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public String getListaExtensoes(String listaExtensoesNome) {
@@ -77,14 +90,21 @@ public class ActionExtensao extends Action {
                         nomeExtensoes += ";";
                     }
                 }
-
-                for (Extensao extensao : extensoes) {
-
-                }
             }
         }
 
         return nomeExtensoes;
+    }
+
+    public void deletarListaExtensao(String nomeLista) {
+        try {
+            int key = getKeyComboNomeExtensoes(nomeLista);
+            ListaExtensoes listaExtensoes = listaExtensoesJpaController.findListaExtensoes(key);
+            deletarExtensoes(listaExtensoes.getExtensaoList());
+            listaExtensoesJpaController.destroy(key);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ActionExtensao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

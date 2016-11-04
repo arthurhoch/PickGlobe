@@ -43,7 +43,7 @@ public class Action {
         
         for (int i = 0; i < listaPalavras.size(); i++) {
             ListaPalavras lps = listaPalavras.get(i);
-            comboNomeListas.add(new ComboItem(lps.getNomeLista(), lps.getCodListaPalavras().toString()));
+            comboNomeListas.add(new ComboItem(lps.getCodListaPalavras().toString(), lps.getNomeLista()));
         }
 
         return comboNomeListas;

@@ -134,7 +134,6 @@ public class EditarExtensao extends javax.swing.JFrame {
 
         if (!listaExtensoes.isEmpty()) {
             action.atualizarListaExtensao(nomeLista, listaExtensoes.split(";"));
-            this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Confira as informações");
         }
@@ -145,7 +144,11 @@ public class EditarExtensao extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        int selected = jComboBox1.getSelectedIndex();
+        
+        String nomeLista = jComboBox1.getItemAt(selected);
+        jComboBox1.removeItemAt(selected);
+        action.deletarListaExtensao(nomeLista);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
