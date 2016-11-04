@@ -32,20 +32,23 @@ public class ActionLista extends Action {
             int key = getKeyComboNomeListas(nomeLista);
             ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
             deletarListaPalavra(listaPalavras.getPalavraList());
-            listaPalavrasJpaController.destroy(listaPalavras.getCodListaPalavras());
+            listaPalavrasJpaController.destroy(key);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void deletarListaPalavra(List<Palavra> palavras) {
+        System.out.println("Teste");
         for (Palavra palavra : palavras) {
+            System.out.println("Cod: " + palavra.getCodPalavra());
             try {
                 palavraJpaController.destroy(palavra.getCodPalavra());
             } catch (IllegalOrphanException | NonexistentEntityException ex) {
                 Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
     }
 
     public void addPalavras(String nomeLista, String[] palavras) {
@@ -56,15 +59,6 @@ public class ActionLista extends Action {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void criarLista(String nomeLista, String[] palavras, String tipo) {
-        ListaPalavras listaPalavras = new ListaPalavras();
-        listaPalavras.setNomeLista(nomeLista);
-
-        listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras, tipo));
-
-        listaPalavrasJpaController.create(listaPalavras);
-    }
-
     private List<Palavra> arrayExtesao2ListPalavras(String[] split, String tipo) {
         List<Palavra> palavras = new LinkedList<>();
 
@@ -72,13 +66,20 @@ public class ActionLista extends Action {
             Palavra p = new Palavra();
             p.setTipo(tipo);
             p.setPalavra(palavraString);
-
-            System.out.println(p.getCodPalavra() + p.getPalavra() + p.getTipo());
-
             palavraJpaController.create(p);
+            palavras.add(p);
         }
 
         return palavras;
+    }
+
+    public void criarLista(String nomeLista, String[] palavras, String tipo) {
+        ListaPalavras listaPalavras = new ListaPalavras();
+        
+        listaPalavras.setNomeLista(nomeLista);
+        listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras, tipo));
+
+        listaPalavrasJpaController.create(listaPalavras);
     }
 
     public void criarListaArquivo(String nomeLista, String arquivoPalavras, String tipo) {
