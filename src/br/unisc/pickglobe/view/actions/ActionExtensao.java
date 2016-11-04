@@ -10,6 +10,8 @@ import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,11 +25,7 @@ public class ActionExtensao extends Action {
         this.extensaoJpaController = new ExtensaoJpaController(emf);
     }
 
-    public void criarListaExtensao(String nomeLista, String[] split) {
-        ListaExtensoes listaExtensoes = new ListaExtensoes();
-
-        listaExtensoes.setNomeListaExtensoes(nomeLista);
-
+    private List<Extensao> arrayExtesao2List(String[] split) {
         List<Extensao> extensoes = new LinkedList<>();
 
         for (String nomeExtensao : split) {
@@ -37,35 +35,55 @@ public class ActionExtensao extends Action {
             extensoes.add(extensao);
         }
 
-        listaExtensoes.setExtensaoList(extensoes);
+        return extensoes;
+    }
+
+    public void criarListaExtensao(String nomeLista, String[] split) {
+        ListaExtensoes listaExtensoes = new ListaExtensoes();
+
+        listaExtensoes.setNomeListaExtensoes(nomeLista);
+        listaExtensoes.setExtensaoList(arrayExtesao2List(split));
         listaExtensoesJpaController.create(listaExtensoes);
     }
 
     public void atualizarListaExtensao(String nomeLista, String[] split) {
-       
+
+        int key = getKeyComboNomeExtensoes(nomeLista);
+
+        ListaExtensoes listaExtensoes = listaExtensoesJpaController.findListaExtensoes(key);
+
+        listaExtensoes.setExtensaoList(arrayExtesao2List(split));
+
+        try {
+            listaExtensoesJpaController.edit(listaExtensoes);
+        } catch (Exception ex) {
+            Logger.getLogger(ActionExtensao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public String getListaExtensoes(String listaExtensoesNome) {
         List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
         List<Extensao> extensoes;
         String nomeExtensoes = new String();
-        
+
         for (ListaExtensoes listaExtensoe : listaExtensoes) {
-            if(listaExtensoe.getNomeListaExtensoes() == null ? listaExtensoesNome == null : listaExtensoe.getNomeListaExtensoes().equals(listaExtensoesNome)) {
+            if (listaExtensoe.getNomeListaExtensoes() == null ? listaExtensoesNome == null : listaExtensoe.getNomeListaExtensoes().equals(listaExtensoesNome)) {
                 extensoes = listaExtensoe.getExtensaoList();
-                
+
                 for (int i = 0; i < extensoes.size(); i++) {
                     nomeExtensoes += extensoes.get(i).getNomeExtensao();
-                    if(i != extensoes.size())
+                    if (i != extensoes.size()) {
                         nomeExtensoes += ";";
+                    }
                 }
-                
+
                 for (Extensao extensao : extensoes) {
-                    
+
                 }
             }
         }
-        
+
         return nomeExtensoes;
     }
 

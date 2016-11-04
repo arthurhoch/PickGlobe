@@ -15,6 +15,8 @@ import java.util.List;
 public class ActionSite extends Action {
 
     public String[] getNomeSites() {
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
