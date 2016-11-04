@@ -9,6 +9,8 @@ import br.unisc.pickglobe.controller.ListaExtensoesJpaController;
 import br.unisc.pickglobe.controller.ListaPalavrasJpaController;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import br.unisc.pickglobe.model.ListaPalavras;
+import br.unisc.pickglobe.view.tabelas.ComboItem;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,40 +20,62 @@ import javax.persistence.Persistence;
  * @author arthurhoch
  */
 public class Action {
+
+    protected final EntityManagerFactory emf;
+    protected final ListaExtensoesJpaController listaExtensoesJpaController;
+    protected final ListaPalavrasJpaController listaPalavrasJpaController;
     
-    final EntityManagerFactory emf;
-    final ListaExtensoesJpaController listaExtensoesJpaController;
-    final ListaPalavrasJpaController listaPalavrasJpaController;
-    
+    protected final List<ComboItem> comboNomeListas;
+    protected final List<ComboItem> comboNomeExtensoes;
     
     public Action() {
         this.emf = Persistence.createEntityManagerFactory("TrabalhoPGBDPU");
         this.listaExtensoesJpaController = new ListaExtensoesJpaController(emf);
         this.listaPalavrasJpaController = new ListaPalavrasJpaController(emf);
+        this.comboNomeListas = new LinkedList<>();
+        this.comboNomeExtensoes = new LinkedList<>();
     }
 
-    public String[] getNomeListas() {
+    public List<ComboItem> getNomeListas() {
         List<ListaPalavras> listaPalavras = listaPalavrasJpaController.findListaPalavrasEntities();
-        String[] nomeArray = new String[listaPalavras.size()];
         
+        comboNomeListas.clear();
         
         for (int i = 0; i < listaPalavras.size(); i++) {
-            nomeArray[i] = listaPalavras.get(i).getNomeLista();
+            ListaPalavras lps = listaPalavras.get(i);
+            comboNomeListas.add(new ComboItem(lps.getNomeLista(), lps.getCodListaPalavras().toString()));
         }
 
-        return nomeArray;
+        return comboNomeListas;
+    }
+    
+    public int getKeyComboNomeListas(String value) {
+        for (ComboItem item : comboNomeListas) {
+            if(item.getValue().equals(value))
+                return Integer.parseInt(item.getKey()) ;
+        }
+        return 0;
     }
 
-    public String[] getNomeExtensoes() {
+    public List<ComboItem> getNomeExtensoes() {
         List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
-        String[] nomeArray = new String[listaExtensoes.size()];
-        
+
+        comboNomeExtensoes.clear();
         
         for (int i = 0; i < listaExtensoes.size(); i++) {
-            nomeArray[i] = listaExtensoes.get(i).getNomeListaExtensoes();
+            ListaExtensoes le = listaExtensoes.get(i);
+            comboNomeExtensoes.add(new ComboItem(le.getCodListaExtensoes().toString(), le.getNomeListaExtensoes()));
         }
 
-        return nomeArray;
+        return comboNomeExtensoes;
+    }
+    
+    public int getKeyComboNomeExtensoes(String value) {
+        for (ComboItem item : comboNomeExtensoes) {
+            if(item.getValue().equals(value))
+                return Integer.parseInt(item.getKey()) ;
+        }
+        return 0;
     }
 
 }

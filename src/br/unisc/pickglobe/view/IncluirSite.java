@@ -64,8 +64,6 @@ public class IncluirSite extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(jTextPane1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeListas()));
-
         jLabel3.setText("Intervalo:");
 
         jButton1.setText("Salvar");
@@ -90,7 +88,9 @@ public class IncluirSite extends javax.swing.JFrame {
 
         jLabel7.setText("Lista de extensões:");
 
+        /*
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes()));
+        */
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +126,7 @@ public class IncluirSite extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 874, Short.MAX_VALUE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)

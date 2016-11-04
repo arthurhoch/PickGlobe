@@ -5,7 +5,7 @@
  */
 package br.unisc.pickglobe.view.actions;
 
-import java.sql.SQLException;
+import br.unisc.pickglobe.view.tabelas.ComboItem;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public class ActionSite extends Action {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public String[] getNomeExtensoes(String site) {
+    public List<ComboItem> getNomeExtensoes(String site) {
         /* Ordenar com a primeira exteção do site referente*/
         return getNomeExtensoes();
     }

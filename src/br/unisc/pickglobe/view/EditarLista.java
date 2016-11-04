@@ -6,6 +6,8 @@
 package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionLista;
+import br.unisc.pickglobe.view.tabelas.ComboItem;
+import java.util.List;
 
 /**
  *
@@ -69,7 +71,15 @@ public class EditarLista extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setResizable(false);
 
+        List<ComboItem> listaComboItem = action.getNomeListas();
+
+        for(ComboItem item : listaComboItem) {
+            jComboBox1.addItem(item.toString());
+        }
+
+        /*
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeListas()));
+        */
 
         jLabel1.setText("Lista:");
 

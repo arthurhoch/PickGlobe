@@ -6,7 +6,6 @@
 package br.unisc.pickglobe.view.actions;
 
 import br.unisc.pickglobe.controller.ExtensaoJpaController;
-import br.unisc.pickglobe.controller.ListaExtensoesJpaController;
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import java.util.LinkedList;
@@ -43,21 +42,7 @@ public class ActionExtensao extends Action {
     }
 
     public void atualizarListaExtensao(String nomeLista, String[] split) {
-        ListaExtensoes listaExtensoes = new ListaExtensoes();
-        //listaExtensoes = listaExtensoesJpaController.; // Pegar com where na string nomeLista
-        listaExtensoes.setNomeListaExtensoes(nomeLista);
-
-        List<Extensao> extensoes = new LinkedList<>();
-
-        for (String nomeExtensao : split) {
-            Extensao extensao = new Extensao();
-            extensao.setNomeExtensao(nomeExtensao);
-            extensaoJpaController.create(extensao);
-            extensoes.add(extensao);
-        }
-        
-        listaExtensoes.setExtensaoList(extensoes);
-        listaExtensoesJpaController.edit(listaExtensoes);
+       
     }
 
     public String getListaExtensoes(String listaExtensoesNome) {

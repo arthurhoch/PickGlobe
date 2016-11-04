@@ -6,6 +6,8 @@
 package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionExtensao;
+import br.unisc.pickglobe.view.tabelas.ComboItem;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,7 +48,11 @@ public class EditarExtensao extends javax.swing.JFrame {
 
         jLabel1.setText("Extensões:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes()));
+        List<ComboItem> listaComboItem = action.getNomeExtensoes();
+
+        for(ComboItem item : listaComboItem) {
+            jComboBox1.addItem(item.toString());
+        }
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -123,9 +129,10 @@ public class EditarExtensao extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         String nomeLista = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        
         String listaExtensoes = jTextListaExtensoes.getText();
 
-        if (!nomeLista.isEmpty() && !listaExtensoes.isEmpty()) {
+        if (!listaExtensoes.isEmpty()) {
             action.atualizarListaExtensao(nomeLista, listaExtensoes.split(";"));
             this.dispose();
         } else {
