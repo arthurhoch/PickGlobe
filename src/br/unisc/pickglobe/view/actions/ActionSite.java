@@ -5,8 +5,6 @@
  */
 package br.unisc.pickglobe.view.actions;
 
-import br.unisc.pickglobe.controller.SiteController;
-import br.unisc.pickglobe.model.Site;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,20 +15,7 @@ import java.util.List;
 public class ActionSite extends Action {
 
     public String[] getNomeSites() {
-        SiteController siteController = new SiteController();
-        List<Site> sites = siteController.selectAll();
-        
-        String sitesString = new String();
-        
-        for (Site site : sites) {
-            
-            if(sitesString.isEmpty())
-                sitesString += site.getUrl();
-            else
-                sitesString += ";" + site.getUrl();
-        }
-        
-        return sitesString.split(";");
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String[] getNomeExtensoes(String site) {
@@ -39,9 +24,6 @@ public class ActionSite extends Action {
     }
 
     public void criarSite(String URL, String nomeListaPalavras, int intervaloConsulta) {
-        Site site = new Site();
-
-        site.setUrl(URL);
 
     }
 
@@ -50,14 +32,6 @@ public class ActionSite extends Action {
     }
 
     public void deletarSite(String siteDeletar) {
-
-        try {
-            SiteController siteController = new SiteController();
-            Site site = (Site) siteController.select(siteDeletar);
-            siteController.delete(site);
-        } catch (SQLException ex) {
-            //Logger.getLogger(ActionSite.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }
 

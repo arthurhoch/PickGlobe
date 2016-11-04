@@ -5,6 +5,7 @@
  */
 package br.unisc.pickglobe.core;
 
+
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.Link;
 import java.io.BufferedReader;
@@ -47,7 +48,7 @@ public class Util {
 
                     boolean contem = false;
                     for (Extensao extensao : extensoes) {
-                        if (asc.contains(extensao.getTipoExtensao())) {
+                        if (asc.contains(extensao.getNomeExtensao())) {
                             contem = true;
                         }
                     }

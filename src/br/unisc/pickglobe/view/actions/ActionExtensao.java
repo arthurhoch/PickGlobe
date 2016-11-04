@@ -5,22 +5,83 @@
  */
 package br.unisc.pickglobe.view.actions;
 
+import br.unisc.pickglobe.controller.ExtensaoJpaController;
+import br.unisc.pickglobe.controller.ListaExtensoesJpaController;
+import br.unisc.pickglobe.model.Extensao;
+import br.unisc.pickglobe.model.ListaExtensoes;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author m93492
  */
-public class ActionExtensao extends Action{
+public class ActionExtensao extends Action {
+
+    private final ExtensaoJpaController extensaoJpaController;
+
+    public ActionExtensao() {
+        this.extensaoJpaController = new ExtensaoJpaController(emf);
+    }
 
     public void criarListaExtensao(String nomeLista, String[] split) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ListaExtensoes listaExtensoes = new ListaExtensoes();
+
+        listaExtensoes.setNomeListaExtensoes(nomeLista);
+
+        List<Extensao> extensoes = new LinkedList<>();
+
+        for (String nomeExtensao : split) {
+            Extensao extensao = new Extensao();
+            extensao.setNomeExtensao(nomeExtensao);
+            extensaoJpaController.create(extensao);
+            extensoes.add(extensao);
+        }
+
+        listaExtensoes.setExtensaoList(extensoes);
+        listaExtensoesJpaController.create(listaExtensoes);
     }
 
     public void atualizarListaExtensao(String nomeLista, String[] split) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ListaExtensoes listaExtensoes = new ListaExtensoes();
+        //listaExtensoes = listaExtensoesJpaController.; // Pegar com where na string nomeLista
+        listaExtensoes.setNomeListaExtensoes(nomeLista);
+
+        List<Extensao> extensoes = new LinkedList<>();
+
+        for (String nomeExtensao : split) {
+            Extensao extensao = new Extensao();
+            extensao.setNomeExtensao(nomeExtensao);
+            extensaoJpaController.create(extensao);
+            extensoes.add(extensao);
+        }
+        
+        listaExtensoes.setExtensaoList(extensoes);
+        listaExtensoesJpaController.edit(listaExtensoes);
     }
 
-    public String getListaExtensoes(String itemAt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getListaExtensoes(String listaExtensoesNome) {
+        List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
+        List<Extensao> extensoes;
+        String nomeExtensoes = new String();
+        
+        for (ListaExtensoes listaExtensoe : listaExtensoes) {
+            if(listaExtensoe.getNomeListaExtensoes() == null ? listaExtensoesNome == null : listaExtensoe.getNomeListaExtensoes().equals(listaExtensoesNome)) {
+                extensoes = listaExtensoe.getExtensaoList();
+                
+                for (int i = 0; i < extensoes.size(); i++) {
+                    nomeExtensoes += extensoes.get(i).getNomeExtensao();
+                    if(i != extensoes.size())
+                        nomeExtensoes += ";";
+                }
+                
+                for (Extensao extensao : extensoes) {
+                    
+                }
+            }
+        }
+        
+        return nomeExtensoes;
     }
-    
+
 }

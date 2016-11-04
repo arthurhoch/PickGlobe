@@ -1,33 +1,102 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.unisc.pickglobe.model;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author will
+ * @author arthurhoch
  */
-public class Site {
-    private int codSites;
-    private Timestamp tempoColeta;
+@Entity
+@Table(name = "Site")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Site.findAll", query = "SELECT s FROM Site s"),
+    @NamedQuery(name = "Site.findByCodSite", query = "SELECT s FROM Site s WHERE s.codSite = :codSite"),
+    @NamedQuery(name = "Site.findByIntervaloColeta", query = "SELECT s FROM Site s WHERE s.intervaloColeta = :intervaloColeta"),
+    @NamedQuery(name = "Site.findByStatus", query = "SELECT s FROM Site s WHERE s.status = :status"),
+    @NamedQuery(name = "Site.findByUrl", query = "SELECT s FROM Site s WHERE s.url = :url")})
+public class Site implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "codSite")
+    private Integer codSite;
+    @Basic(optional = false)
+    @Column(name = "intervaloColeta")
+    private int intervaloColeta;
+    @Basic(optional = false)
+    @Column(name = "status")
+    private boolean status;
+    @Basic(optional = false)
+    @Column(name = "url")
     private String url;
-    private int status;
-    private String descricao;
+    @JoinColumn(name = "codListaExtensoes", referencedColumnName = "codListaExtensoes")
+    @ManyToOne
+    private ListaExtensoes codListaExtensoes;
+    @JoinColumn(name = "codListaPalavras", referencedColumnName = "codListaPalavras")
+    @ManyToOne
+    private ListaPalavras codListaPalavras;
+    @OneToMany(mappedBy = "codSite")
+    private List<Coleta> coletaList;
 
-    public int getCodSites() {
-        return codSites;
+    public Site() {
     }
 
-    public void setCodSites(int codSites) {
-        this.codSites = codSites;
+    public Site(Integer codSite) {
+        this.codSite = codSite;
     }
 
-    public Timestamp getTempoColeta() {
-        return tempoColeta;
+    public Site(Integer codSite, int intervaloColeta, boolean status, String url) {
+        this.codSite = codSite;
+        this.intervaloColeta = intervaloColeta;
+        this.status = status;
+        this.url = url;
     }
 
-    public void setTempoColeta(Timestamp tempoColeta) {
-        this.tempoColeta = tempoColeta;
+    public Integer getCodSite() {
+        return codSite;
+    }
+
+    public void setCodSite(Integer codSite) {
+        this.codSite = codSite;
+    }
+
+    public int getIntervaloColeta() {
+        return intervaloColeta;
+    }
+
+    public void setIntervaloColeta(int intervaloColeta) {
+        this.intervaloColeta = intervaloColeta;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getUrl() {
@@ -38,21 +107,54 @@ public class Site {
         this.url = url;
     }
 
-    public int getStatus() {
-        return status;
+    public ListaExtensoes getCodListaExtensoes() {
+        return codListaExtensoes;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCodListaExtensoes(ListaExtensoes codListaExtensoes) {
+        this.codListaExtensoes = codListaExtensoes;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public ListaPalavras getCodListaPalavras() {
+        return codListaPalavras;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setCodListaPalavras(ListaPalavras codListaPalavras) {
+        this.codListaPalavras = codListaPalavras;
+    }
+
+    @XmlTransient
+    public List<Coleta> getColetaList() {
+        return coletaList;
+    }
+
+    public void setColetaList(List<Coleta> coletaList) {
+        this.coletaList = coletaList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (codSite != null ? codSite.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Site)) {
+            return false;
+        }
+        Site other = (Site) object;
+        if ((this.codSite == null && other.codSite != null) || (this.codSite != null && !this.codSite.equals(other.codSite))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.unisc.pickglobe.model.Site[ codSite=" + codSite + " ]";
     }
     
-
 }

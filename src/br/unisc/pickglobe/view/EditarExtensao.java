@@ -39,11 +39,12 @@ public class EditarExtensao extends javax.swing.JFrame {
         jTextListaExtensoes = new javax.swing.JTextPane();
         jButtonCancelar = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar extensões");
 
-        jLabel1.setText("Lista:");
+        jLabel1.setText("Extensões:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes()));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -53,6 +54,7 @@ public class EditarExtensao extends javax.swing.JFrame {
         });
 
         jScrollPane1.setViewportView(jTextListaExtensoes);
+        jTextListaExtensoes.setText(action.getListaExtensoes(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())));
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +70,13 @@ public class EditarExtensao extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Excluir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,9 +88,11 @@ public class EditarExtensao extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, 252, Short.MAX_VALUE))
+                        .addComponent(jComboBox1, 0, 214, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSalvar)))
                 .addContainerGap())
@@ -98,7 +109,8 @@ public class EditarExtensao extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
-                    .addComponent(jButtonSalvar))
+                    .addComponent(jButtonSalvar)
+                    .addComponent(jButton1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -124,6 +136,10 @@ public class EditarExtensao extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         jTextListaExtensoes.setText(action.getListaExtensoes(jComboBox1.getItemAt(jComboBox1.getSelectedIndex())));
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +177,7 @@ public class EditarExtensao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox<String> jComboBox1;
