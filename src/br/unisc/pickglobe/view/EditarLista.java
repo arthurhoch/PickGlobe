@@ -50,10 +50,6 @@ public class EditarLista extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane2 = new javax.swing.JTextPane();
         jLabel3 = new javax.swing.JLabel();
-        jInternalFrame3 = new javax.swing.JInternalFrame();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane4 = new javax.swing.JTextPane();
         jInternalFrame4 = new javax.swing.JInternalFrame();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -144,37 +140,6 @@ public class EditarLista extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Remover palavra", jInternalFrame1);
-
-        jInternalFrame3.setVisible(true);
-
-        jLabel4.setText("Selecione uma arquivo de palavras a remover:");
-
-        jScrollPane3.setViewportView(jTextPane4);
-
-        javax.swing.GroupLayout jInternalFrame3Layout = new javax.swing.GroupLayout(jInternalFrame3.getContentPane());
-        jInternalFrame3.getContentPane().setLayout(jInternalFrame3Layout);
-        jInternalFrame3Layout.setHorizontalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jInternalFrame3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 250, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
-        );
-        jInternalFrame3Layout.setVerticalGroup(
-            jInternalFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Remover em massa", jInternalFrame3);
 
         jInternalFrame4.setVisible(true);
 
@@ -283,7 +248,6 @@ public class EditarLista extends javax.swing.JFrame {
         String listaAdd = jTextPane1.getText();
         String listaRm = jTextPane2.getText();
         String arquivoAdd = jTextPane3.getText();
-        String arquivoRm = jTextPane4.getText();
 
         if(listaAdd != null) {
             String[] palavras = listaAdd.split(";");
@@ -297,10 +261,6 @@ public class EditarLista extends javax.swing.JFrame {
   
         if(arquivoAdd != null) {
             action.addArquivoPalavras(nomeLista, arquivoAdd);
-        }
-        
-        if(arquivoRm != null) {
-            action.rmArquivoPalavras(nomeLista, arquivoRm);
         }
         
         this.dispose();
@@ -350,21 +310,17 @@ public class EditarLista extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JInternalFrame jInternalFrame2;
-    private javax.swing.JInternalFrame jInternalFrame3;
     private javax.swing.JInternalFrame jInternalFrame4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JTextPane jTextPane3;
-    private javax.swing.JTextPane jTextPane4;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,9 +5,13 @@
  */
 package br.unisc.pickglobe.tests;
 
+import br.unisc.pickglobe.model.Palavra;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -19,18 +23,20 @@ public class AbrirArquivo {
     }
      
      
-     public static void abrirArquivo() throws FileNotFoundException {
-         /*
-         List<Palavra> 
+     public static void abrirArquivo() throws FileNotFoundException, IOException {
+         
+         List<Palavra> listaPalavras = new LinkedList<>();
                  
-         BufferedReader br = new BufferedReader(new FileReader("~/palavras.txt"));
+         BufferedReader br = new BufferedReader(new FileReader("/home/arthurhoch/palavras.txt"));
          
-         String line;
+         String palavra;
          
-         while( (line = br.readLine()) != null ) {
-             
+         while( (palavra = br.readLine()) != null ) {
+             Palavra p = new Palavra();
+             p.setPalavra(palavra);
+             listaPalavras.add(p);
          }
          
-         */
+         
      }
 }

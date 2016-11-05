@@ -10,7 +10,10 @@ import br.unisc.pickglobe.controller.exceptions.IllegalOrphanException;
 import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.model.Palavra;
-import br.unisc.pickglobe.model.TipoLista;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,16 +56,21 @@ public class ActionLista extends Action {
     }
 
     public void addPalavras(String nomeLista, String[] palavras) {
-        int key = getKeyComboNomeListasPalavras(nomeLista);
-        ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
-        
+        try {
+            int key = getKeyComboNomeListasPalavras(nomeLista);
+            ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
+            listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras));
+            listaPalavrasJpaController.edit(listaPalavras);
+        } catch (Exception ex) {
+            Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void rmPalavras(String nomeLista, String[] palavras) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private List<Palavra> arrayExtesao2ListPalavras(String[] split, String tipo) {
+    private List<Palavra> arrayExtesao2ListPalavras(String[] split) {
         List<Palavra> palavras = new LinkedList<>();
 
         for (String palavraString : split) {
@@ -77,25 +85,57 @@ public class ActionLista extends Action {
 
     public void criarLista(String nomeLista, String[] palavras, String tipo) {
         ListaPalavras listaPalavras = new ListaPalavras();
-        
+
         listaPalavras.setCodTipoLista(tipoListaJpaController.findTipoLista(getKeyComboNomeListaTipo(tipo)));
-        
+
         listaPalavras.setNomeLista(nomeLista);
-        listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras, tipo));
+        listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras));
 
         listaPalavrasJpaController.create(listaPalavras);
     }
 
     public void criarListaArquivo(String nomeLista, String arquivoPalavras, String tipo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ListaPalavras listaPalavras = new ListaPalavras();
+
+        listaPalavras.setCodTipoLista(tipoListaJpaController.findTipoLista(getKeyComboNomeListaTipo(tipo)));
+
+        listaPalavras.setNomeLista(nomeLista);
+        addArquivoPalavras(listaPalavras, arquivoPalavras);
+
+        listaPalavrasJpaController.create(listaPalavras);
     }
 
-    public void addArquivoPalavras(String nomeLista, String arquivoAdd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addArquivoPalavras(String nomeLista, String arquivoPalavras) {
+        ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(getKeyComboNomeListasPalavras(nomeLista));
+        addArquivoPalavras(listaPalavras, arquivoPalavras);
     }
 
-    public void rmArquivoPalavras(String nomeLista, String arquivoRm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private void addArquivoPalavras(ListaPalavras listaPalavras, String arquivoPalavras) {
+        BufferedReader br = null;
+        try {
 
+            List<Palavra> palavras = new LinkedList<>();
+            br = new BufferedReader(new FileReader(arquivoPalavras));
+            String palavra;
+            while ((palavra = br.readLine()) != null) {
+                Palavra p = new Palavra();
+                p.setPalavra(palavra);
+                palavras.add(p);
+                palavraJpaController.create(p);
+            }
+
+            listaPalavras.setPalavraList(palavras);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                br.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ActionLista.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
