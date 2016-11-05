@@ -42,7 +42,7 @@ public class ActionSite extends Action {
 
         int keyListaExtensoes = getKeyComboNomeExtensoes(nomeListaExtensoes);
 
-        int keyListaPalavras = getKeyComboNomeListas(nomeListaPalavras);
+        int keyListaPalavras = getKeyComboNomeListasPalavras(nomeListaPalavras);
 
         ListaExtensoes listaExtensoes = listaExtensoesJpaController.findListaExtensoes(keyListaExtensoes);
 

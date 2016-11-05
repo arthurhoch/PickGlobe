@@ -56,7 +56,7 @@ public class Action {
         return comboNomeListas;
     }
 
-    public int getKeyComboNomeListas(String value) {
+    public int getKeyComboNomeListasPalavras(String value) {
         for (ComboItem item : comboNomeListas) {
             if (item.getValue().equals(value)) {
                 return Integer.parseInt(item.getKey());

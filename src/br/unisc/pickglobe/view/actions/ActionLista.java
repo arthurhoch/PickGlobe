@@ -29,7 +29,7 @@ public class ActionLista extends Action {
 
     public void deletarLista(String nomeLista) {
         try {
-            int key = getKeyComboNomeListas(nomeLista);
+            int key = getKeyComboNomeListasPalavras(nomeLista);
             ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
             deletarListaPalavra(listaPalavras.getPalavraList());
             listaPalavrasJpaController.destroy(key);
@@ -52,7 +52,7 @@ public class ActionLista extends Action {
     }
 
     public void addPalavras(String nomeLista, String[] palavras) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     public void rmPalavras(String nomeLista, String[] palavras) {
