@@ -284,7 +284,7 @@ public class EditarLista extends javax.swing.JFrame {
         String listaRm = jTextPane2.getText();
         String arquivoAdd = jTextPane3.getText();
         String arquivoRm = jTextPane4.getText();
-        
+
         if(listaAdd != null) {
             String[] palavras = listaAdd.split(";");
             action.addPalavras(nomeLista, palavras);

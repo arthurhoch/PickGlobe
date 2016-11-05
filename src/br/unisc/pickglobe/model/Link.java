@@ -111,7 +111,7 @@ public class Link implements Serializable {
     public void setPagina(String pagina) {
         this.pagina = pagina;
     }
-    
+
     @XmlTransient
     public List<Coleta> getColetaList() {
         return coletaList;

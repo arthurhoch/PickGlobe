@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import br.unisc.pickglobe.model.TipoLista;
 import br.unisc.pickglobe.model.Palavra;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,11 @@ public class ListaPalavrasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            TipoLista codTipoLista = listaPalavras.getCodTipoLista();
+            if (codTipoLista != null) {
+                codTipoLista = em.getReference(codTipoLista.getClass(), codTipoLista.getCodTipoLista());
+                listaPalavras.setCodTipoLista(codTipoLista);
+            }
             List<Palavra> attachedPalavraList = new ArrayList<Palavra>();
             for (Palavra palavraListPalavraToAttach : listaPalavras.getPalavraList()) {
                 palavraListPalavraToAttach = em.getReference(palavraListPalavraToAttach.getClass(), palavraListPalavraToAttach.getCodPalavra());
@@ -58,6 +64,10 @@ public class ListaPalavrasJpaController implements Serializable {
             }
             listaPalavras.setSiteList(attachedSiteList);
             em.persist(listaPalavras);
+            if (codTipoLista != null) {
+                codTipoLista.getListaPalavrasList().add(listaPalavras);
+                codTipoLista = em.merge(codTipoLista);
+            }
             for (Palavra palavraListPalavra : listaPalavras.getPalavraList()) {
                 palavraListPalavra.getListaPalavrasList().add(listaPalavras);
                 palavraListPalavra = em.merge(palavraListPalavra);
@@ -85,10 +95,16 @@ public class ListaPalavrasJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             ListaPalavras persistentListaPalavras = em.find(ListaPalavras.class, listaPalavras.getCodListaPalavras());
+            TipoLista codTipoListaOld = persistentListaPalavras.getCodTipoLista();
+            TipoLista codTipoListaNew = listaPalavras.getCodTipoLista();
             List<Palavra> palavraListOld = persistentListaPalavras.getPalavraList();
             List<Palavra> palavraListNew = listaPalavras.getPalavraList();
             List<Site> siteListOld = persistentListaPalavras.getSiteList();
             List<Site> siteListNew = listaPalavras.getSiteList();
+            if (codTipoListaNew != null) {
+                codTipoListaNew = em.getReference(codTipoListaNew.getClass(), codTipoListaNew.getCodTipoLista());
+                listaPalavras.setCodTipoLista(codTipoListaNew);
+            }
             List<Palavra> attachedPalavraListNew = new ArrayList<Palavra>();
             for (Palavra palavraListNewPalavraToAttach : palavraListNew) {
                 palavraListNewPalavraToAttach = em.getReference(palavraListNewPalavraToAttach.getClass(), palavraListNewPalavraToAttach.getCodPalavra());
@@ -104,6 +120,14 @@ public class ListaPalavrasJpaController implements Serializable {
             siteListNew = attachedSiteListNew;
             listaPalavras.setSiteList(siteListNew);
             listaPalavras = em.merge(listaPalavras);
+            if (codTipoListaOld != null && !codTipoListaOld.equals(codTipoListaNew)) {
+                codTipoListaOld.getListaPalavrasList().remove(listaPalavras);
+                codTipoListaOld = em.merge(codTipoListaOld);
+            }
+            if (codTipoListaNew != null && !codTipoListaNew.equals(codTipoListaOld)) {
+                codTipoListaNew.getListaPalavrasList().add(listaPalavras);
+                codTipoListaNew = em.merge(codTipoListaNew);
+            }
             for (Palavra palavraListOldPalavra : palavraListOld) {
                 if (!palavraListNew.contains(palavraListOldPalavra)) {
                     palavraListOldPalavra.getListaPalavrasList().remove(listaPalavras);
@@ -161,6 +185,11 @@ public class ListaPalavrasJpaController implements Serializable {
                 listaPalavras.getCodListaPalavras();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The listaPalavras with id " + id + " no longer exists.", enfe);
+            }
+            TipoLista codTipoLista = listaPalavras.getCodTipoLista();
+            if (codTipoLista != null) {
+                codTipoLista.getListaPalavrasList().remove(listaPalavras);
+                codTipoLista = em.merge(codTipoLista);
             }
             List<Palavra> palavraList = listaPalavras.getPalavraList();
             for (Palavra palavraListPalavra : palavraList) {

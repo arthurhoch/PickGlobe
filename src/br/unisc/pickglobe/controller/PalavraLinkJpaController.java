@@ -39,8 +39,8 @@ public class PalavraLinkJpaController implements Serializable {
         if (palavraLink.getPalavraLinkPK() == null) {
             palavraLink.setPalavraLinkPK(new PalavraLinkPK());
         }
-        palavraLink.getPalavraLinkPK().setCodPalavra(palavraLink.getPalavra().getCodPalavra());
         palavraLink.getPalavraLinkPK().setCodLink(palavraLink.getLink().getCodLink());
+        palavraLink.getPalavraLinkPK().setCodPalavra(palavraLink.getPalavra().getCodPalavra());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,8 +78,8 @@ public class PalavraLinkJpaController implements Serializable {
     }
 
     public void edit(PalavraLink palavraLink) throws NonexistentEntityException, Exception {
-        palavraLink.getPalavraLinkPK().setCodPalavra(palavraLink.getPalavra().getCodPalavra());
         palavraLink.getPalavraLinkPK().setCodLink(palavraLink.getLink().getCodLink());
+        palavraLink.getPalavraLinkPK().setCodPalavra(palavraLink.getPalavra().getCodPalavra());
         EntityManager em = null;
         try {
             em = getEntityManager();

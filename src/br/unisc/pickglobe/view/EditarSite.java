@@ -63,11 +63,17 @@ public class EditarSite extends javax.swing.JFrame {
 
         jLabel1.setText("Site:");
 
+        List<ComboItem> listaComboItem1 = action.getNomeListas();
+
+        for(ComboItem item : listaComboItem1) {
+            jComboBox1.addItem(item.toString());
+        }
+
         jLabel2.setText("Lista de palavras: ");
 
-        List<ComboItem> listaComboItem = action.getNomeSites();
+        List<ComboItem> listaComboItem2 = action.getNomeSites();
 
-        for(ComboItem item : listaComboItem) {
+        for(ComboItem item : listaComboItem2) {
             jComboBox2.addItem(item.toString());
         }
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +118,11 @@ public class EditarSite extends javax.swing.JFrame {
 
         jLabel8.setText("Lista de extensões:");
 
+        List<ComboItem> listaComboItem3 = action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+
+        for(ComboItem item : listaComboItem3) {
+            jComboBox3.addItem(item.toString());
+        }
         /*
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()))));
         */

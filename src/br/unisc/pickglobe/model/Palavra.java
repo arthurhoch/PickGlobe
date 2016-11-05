@@ -32,8 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Palavra.findAll", query = "SELECT p FROM Palavra p"),
     @NamedQuery(name = "Palavra.findByCodPalavra", query = "SELECT p FROM Palavra p WHERE p.codPalavra = :codPalavra"),
-    @NamedQuery(name = "Palavra.findByPalavra", query = "SELECT p FROM Palavra p WHERE p.palavra = :palavra"),
-    @NamedQuery(name = "Palavra.findByTipo", query = "SELECT p FROM Palavra p WHERE p.tipo = :tipo")})
+    @NamedQuery(name = "Palavra.findByPalavra", query = "SELECT p FROM Palavra p WHERE p.palavra = :palavra")})
 public class Palavra implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,9 +44,6 @@ public class Palavra implements Serializable {
     @Basic(optional = false)
     @Column(name = "palavra")
     private String palavra;
-    @Basic(optional = false)
-    @Column(name = "tipo")
-    private String tipo;
     @ManyToMany(mappedBy = "palavraList")
     private List<ListaPalavras> listaPalavrasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "palavra")
@@ -60,10 +56,9 @@ public class Palavra implements Serializable {
         this.codPalavra = codPalavra;
     }
 
-    public Palavra(Integer codPalavra, String palavra, String tipo) {
+    public Palavra(Integer codPalavra, String palavra) {
         this.codPalavra = codPalavra;
         this.palavra = palavra;
-        this.tipo = tipo;
     }
 
     public Integer getCodPalavra() {
@@ -80,14 +75,6 @@ public class Palavra implements Serializable {
 
     public void setPalavra(String palavra) {
         this.palavra = palavra;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     @XmlTransient

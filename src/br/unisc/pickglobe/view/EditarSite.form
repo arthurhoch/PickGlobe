@@ -128,6 +128,7 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem1 = action.getNomeListas();&#xa;&#xa;for(ComboItem item : listaComboItem1) {&#xa;    jComboBox1.addItem(item.toString());&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
@@ -141,7 +142,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem = action.getNomeSites();&#xa;&#xa;for(ComboItem item : listaComboItem) {&#xa;    jComboBox2.addItem(item.toString());&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem2 = action.getNomeSites();&#xa;&#xa;for(ComboItem item : listaComboItem2) {&#xa;    jComboBox2.addItem(item.toString());&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
@@ -214,7 +215,7 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="*/"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="/*"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem3 = action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));&#xa;&#xa;for(ComboItem item : listaComboItem3) {&#xa;    jComboBox3.addItem(item.toString());&#xa;}&#xa;/*"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>

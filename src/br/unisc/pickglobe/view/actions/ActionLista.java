@@ -10,6 +10,7 @@ import br.unisc.pickglobe.controller.exceptions.IllegalOrphanException;
 import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.model.Palavra;
+import br.unisc.pickglobe.model.TipoLista;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,6 +53,8 @@ public class ActionLista extends Action {
     }
 
     public void addPalavras(String nomeLista, String[] palavras) {
+        int key = getKeyComboNomeListasPalavras(nomeLista);
+        ListaPalavras listaPalavras = listaPalavrasJpaController.findListaPalavras(key);
         
     }
 
@@ -64,7 +67,6 @@ public class ActionLista extends Action {
 
         for (String palavraString : split) {
             Palavra p = new Palavra();
-            p.setTipo(tipo);
             p.setPalavra(palavraString);
             palavraJpaController.create(p);
             palavras.add(p);
@@ -75,6 +77,8 @@ public class ActionLista extends Action {
 
     public void criarLista(String nomeLista, String[] palavras, String tipo) {
         ListaPalavras listaPalavras = new ListaPalavras();
+        
+        listaPalavras.setCodTipoLista(tipoListaJpaController.findTipoLista(getKeyComboNomeListaTipo(tipo)));
         
         listaPalavras.setNomeLista(nomeLista);
         listaPalavras.setPalavraList(arrayExtesao2ListPalavras(palavras, tipo));

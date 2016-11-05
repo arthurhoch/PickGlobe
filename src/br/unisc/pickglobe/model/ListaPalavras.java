@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -52,6 +53,9 @@ public class ListaPalavras implements Serializable {
     private List<Palavra> palavraList;
     @OneToMany(mappedBy = "codListaPalavras")
     private List<Site> siteList;
+    @JoinColumn(name = "codTipoLista", referencedColumnName = "codTipoLista")
+    @ManyToOne
+    private TipoLista codTipoLista;
 
     public ListaPalavras() {
     }
@@ -97,6 +101,14 @@ public class ListaPalavras implements Serializable {
 
     public void setSiteList(List<Site> siteList) {
         this.siteList = siteList;
+    }
+
+    public TipoLista getCodTipoLista() {
+        return codTipoLista;
+    }
+
+    public void setCodTipoLista(TipoLista codTipoLista) {
+        this.codTipoLista = codTipoLista;
     }
 
     @Override

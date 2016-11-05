@@ -8,9 +8,11 @@ package br.unisc.pickglobe.view.actions;
 import br.unisc.pickglobe.controller.ListaExtensoesJpaController;
 import br.unisc.pickglobe.controller.ListaPalavrasJpaController;
 import br.unisc.pickglobe.controller.SiteJpaController;
+import br.unisc.pickglobe.controller.TipoListaJpaController;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.model.Site;
+import br.unisc.pickglobe.model.TipoLista;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,19 +30,25 @@ public class Action {
     protected final ListaExtensoesJpaController listaExtensoesJpaController;
     protected final ListaPalavrasJpaController listaPalavrasJpaController;
     protected final SiteJpaController siteJpacontroller;
+    protected final TipoListaJpaController tipoListaJpaController;
 
     protected final List<ComboItem> comboNomeListas;
     protected final List<ComboItem> comboNomeExtensoes;
     protected final List<ComboItem> comboNomeSite;
+    protected final List<ComboItem> comboTipoLista;
 
     public Action() {
         this.emf = Persistence.createEntityManagerFactory("TrabalhoPGBDPU");
+        
         this.listaExtensoesJpaController = new ListaExtensoesJpaController(emf);
         this.listaPalavrasJpaController = new ListaPalavrasJpaController(emf);
         this.siteJpacontroller = new SiteJpaController(emf);
+        this.tipoListaJpaController = new TipoListaJpaController(emf);
+
         this.comboNomeListas = new LinkedList<>();
         this.comboNomeExtensoes = new LinkedList<>();
         this.comboNomeSite = new LinkedList<>();
+        this.comboTipoLista = new LinkedList<>();
     }
 
     public List<ComboItem> getNomeListas() {
@@ -54,15 +62,6 @@ public class Action {
         }
 
         return comboNomeListas;
-    }
-
-    public int getKeyComboNomeListasPalavras(String value) {
-        for (ComboItem item : comboNomeListas) {
-            if (item.getValue().equals(value)) {
-                return Integer.parseInt(item.getKey());
-            }
-        }
-        return 0;
     }
 
     public List<ComboItem> getNomeExtensoes() {
@@ -90,9 +89,49 @@ public class Action {
 
         return comboNomeSite;
     }
+    
+    public List<ComboItem> getNomeTipoLista() {
+        List<TipoLista> listaTipoLista = tipoListaJpaController.findTipoListaEntities();
+
+        comboTipoLista.clear();
+
+        for (int i = 0; i < listaTipoLista.size(); i++) {
+            TipoLista tl = listaTipoLista.get(i);
+            comboTipoLista.add(new ComboItem(tl.getCodTipoLista().toString(), tl.getTipo()));
+        }
+
+        return comboTipoLista;
+    }
+
+    public int getKeyComboNomeListasPalavras(String value) {
+        for (ComboItem item : comboNomeListas) {
+            if (item.getValue().equals(value)) {
+                return Integer.parseInt(item.getKey());
+            }
+        }
+        return 0;
+    }
 
     public int getKeyComboNomeExtensoes(String value) {
         for (ComboItem item : comboNomeExtensoes) {
+            if (item.getValue().equals(value)) {
+                return Integer.parseInt(item.getKey());
+            }
+        }
+        return 0;
+    }
+    
+    public int getKeyComboNomeSite(String value) {
+        for (ComboItem item : comboNomeSite) {
+            if (item.getValue().equals(value)) {
+                return Integer.parseInt(item.getKey());
+            }
+        }
+        return 0;
+    }
+    
+    public int getKeyComboNomeListaTipo(String value) {
+        for (ComboItem item : comboTipoLista) {
             if (item.getValue().equals(value)) {
                 return Integer.parseInt(item.getKey());
             }
