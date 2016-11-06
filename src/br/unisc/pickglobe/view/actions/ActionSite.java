@@ -5,12 +5,12 @@
  */
 package br.unisc.pickglobe.view.actions;
 
-import br.unisc.pickglobe.controller.SiteJpaController;
+import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import br.unisc.pickglobe.model.ListaExtensoes;
 import br.unisc.pickglobe.model.ListaPalavras;
 import br.unisc.pickglobe.model.Site;
-import br.unisc.pickglobe.view.tabelas.ComboItem;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,23 +18,15 @@ import java.util.List;
  */
 public class ActionSite extends Action {
 
-    private SiteJpaController siteController;
-
-    public ActionSite() {
-        this.siteController = new SiteJpaController(emf);
-    }
-
-    public List<ComboItem> getNomeExtensoes(String site) {
-        /* Ordenar com a primeira exteção do site referente*/
-        return getNomeExtensoes();
-    }
-
-    public void atualizarSite(String URL, String novaURL, String novaLista, int intervaloConsulta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     public void deletarSite(String siteDeletar) {
-
+        try {
+            Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteDeletar));
+            siteJpacontroller.destroy(site.getCodSite());
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ActionSite.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {
@@ -53,11 +45,22 @@ public class ActionSite extends Action {
         site.setCodListaPalavras(listaPalavras);
         site.setIntervaloColeta(intervaloConsulta);
 
-        siteController.create(site);
+        siteJpacontroller.create(site);
     }
 
     public void atualizarSite(String URL, String novaURL, String novaListaPalavras, String novaListaExtensoes, int intervaloConsulta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
+
+            site.setUrl(novaURL);
+            site.setCodListaPalavras(listaPalavrasJpaController.findListaPalavras(getKeyComboNomeListasPalavras(novaListaPalavras)));
+            site.setCodListaExtensoes(listaExtensoesJpaController.findListaExtensoes(getKeyComboNomeExtensoes(novaListaExtensoes)));
+            site.setIntervaloColeta(intervaloConsulta);
+
+            siteJpacontroller.edit(site);
+        } catch (Exception ex) {
+            Logger.getLogger(ActionSite.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

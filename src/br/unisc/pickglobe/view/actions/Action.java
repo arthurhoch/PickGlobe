@@ -50,6 +50,21 @@ public class Action {
         this.comboNomeSite = new LinkedList<>();
         this.comboTipoLista = new LinkedList<>();
     }
+    
+    public boolean existeSites() {
+        List<Site> site = siteJpacontroller.findSiteEntities();
+        return site.size() > 0;
+    }
+    
+    public boolean exitesExtensoes() {
+        List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
+        return listaExtensoes.size() > 0;
+    }
+    
+    public boolean exiteListas() {
+        List<ListaPalavras> listaPalavras = listaPalavrasJpaController.findListaPalavrasEntities();
+        return listaPalavras.size() > 0;
+    }
 
     public List<ComboItem> getNomeListas() {
         List<ListaPalavras> listaPalavras = listaPalavrasJpaController.findListaPalavrasEntities();
@@ -88,6 +103,40 @@ public class Action {
         }
 
         return comboNomeSite;
+    }
+    
+    public List<ComboItem> getNomeExtensoes(String siteUrl) {
+        Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteUrl));
+        String extensao = site.getCodListaExtensoes().getNomeListaExtensoes();
+        
+        List<ComboItem> comboItem = getNomeExtensoes();
+
+        return ordernarComboItem(comboItem, extensao);
+    }
+    
+    public List<ComboItem> getNomeListas(String siteUrl) {
+        Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteUrl));
+        String lista = site.getCodListaPalavras().getNomeLista();
+        
+        List<ComboItem> comboItem = getNomeExtensoes();
+
+        return ordernarComboItem(comboItem, lista);
+        
+    }
+    
+    private List<ComboItem> ordernarComboItem(List<ComboItem> comboItem, String primeiroItem) {
+        for (int i = 0; i < comboItem.size(); i++) {
+            ComboItem item = comboItem.get(i);
+            if (item.toString().equals(primeiroItem)) {
+                ComboItem itemSite = item;
+                ComboItem itemChange = comboItem.get(0);
+                comboItem.set(0, itemSite);
+                comboItem.set(i, itemChange);
+                break;
+            }
+        }
+        
+        return comboItem;
     }
     
     public List<ComboItem> getNomeTipoLista() {

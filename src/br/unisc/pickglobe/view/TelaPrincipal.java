@@ -6,6 +6,7 @@
 package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionPrincipal;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +16,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private static String STATUS = "Continuar";
     private final ActionPrincipal action;
-    
+
     /**
      * Creates new form TelaPrincipal
      */
@@ -26,14 +27,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void initVariables() {
-        
-        
+
     }
-    
-    private void popularTable() {
-        
-    }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -280,15 +276,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        EditarSite editarSite = new EditarSite();                
-        editarSite.setLocation(this.getX(), this.getY());
-        editarSite.setVisible(rootPaneCheckingEnabled);
+        if (action.existeSites()) {
+            EditarSite editarSite = new EditarSite();
+            editarSite.setLocation(this.getX(), this.getY());
+            editarSite.setVisible(rootPaneCheckingEnabled);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Adicione algum site antes de tentar editar");
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if(action.exiteListas() && action.exitesExtensoes()) {
         IncluirSite incluirSite = new IncluirSite();
         incluirSite.setLocation(this.getX(), this.getY());
         incluirSite.setVisible(rootPaneCheckingEnabled);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Adcione pelo menos uma lista e uma extensão antes de adicionar sites");
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenuItem3KeyPressed
@@ -302,9 +306,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        EditarLista editarLista = new EditarLista();
-        editarLista.setLocation(this.getX(), this.getY());
-        editarLista.setVisible(rootPaneCheckingEnabled);
+        if (action.exiteListas()) {
+            EditarLista editarLista = new EditarLista();
+            editarLista.setLocation(this.getX(), this.getY());
+            editarLista.setVisible(rootPaneCheckingEnabled);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Adicione alguma lista de palavras antes de tentar editar");
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -314,9 +322,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        if(action.exitesExtensoes()) {
         EditarExtensao editarExtensao = new EditarExtensao();
         editarExtensao.setLocation(this.getX(), this.getY());
         editarExtensao.setVisible(rootPaneCheckingEnabled);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Adicione alguma lista de extensoes antes de tentar editar");
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**

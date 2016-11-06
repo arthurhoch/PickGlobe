@@ -40,9 +40,9 @@ public class EditarSite extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxPalavras = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxSite = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -52,7 +52,7 @@ public class EditarSite extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBoxExtensoes = new javax.swing.JComboBox<>();
         lblResultIntervalo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -66,7 +66,7 @@ public class EditarSite extends javax.swing.JFrame {
         List<ComboItem> listaComboItem1 = action.getNomeListas();
 
         for(ComboItem item : listaComboItem1) {
-            jComboBox1.addItem(item.toString());
+            jComboBoxPalavras.addItem(item.toString());
         }
 
         jLabel2.setText("Lista de palavras: ");
@@ -74,11 +74,11 @@ public class EditarSite extends javax.swing.JFrame {
         List<ComboItem> listaComboItem2 = action.getNomeSites();
 
         for(ComboItem item : listaComboItem2) {
-            jComboBox2.addItem(item.toString());
+            jComboBoxSite.addItem(item.toString());
         }
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jComboBoxSiteActionPerformed(evt);
             }
         });
 
@@ -91,7 +91,7 @@ public class EditarSite extends javax.swing.JFrame {
         });
 
         jScrollPane1.setViewportView(jTextPane1);
-        jTextPane1.setText(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        jTextPane1.setText(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()));
 
         jLabel7.setText("URL:");
 
@@ -118,13 +118,13 @@ public class EditarSite extends javax.swing.JFrame {
 
         jLabel8.setText("Lista de extensões:");
 
-        List<ComboItem> listaComboItem3 = action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
+        List<ComboItem> listaComboItem3 = action.getNomeExtensoes(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()));
 
         for(ComboItem item : listaComboItem3) {
-            jComboBox3.addItem(item.toString());
+            jComboBoxExtensoes.addItem(item.toString());
         }
         /*
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()))));
+        jComboBoxExtensoes.setModel(new javax.swing.DefaultComboBoxModel<>(action.getNomeExtensoes(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()))));
         */
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,11 +146,11 @@ public class EditarSite extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBoxPalavras, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel1)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jComboBoxSite, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                             .addComponent(jLabel7)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -164,7 +164,7 @@ public class EditarSite extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel8)
                                             .addGap(3, 3, 3)
-                                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(jComboBoxExtensoes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
@@ -175,15 +175,15 @@ public class EditarSite extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxPalavras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxExtensoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -213,21 +213,21 @@ public class EditarSite extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String siteDeletar = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
-        //action.deletarSite(siteDeletar);
-        jComboBox2.removeItemAt(jComboBox2.getSelectedIndex());
+        String siteDeletar = jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex());
+        action.deletarSite(siteDeletar);
+        jComboBoxSite.removeItemAt(jComboBoxSite.getSelectedIndex());
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        jTextPane1.setText(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    private void jComboBoxSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSiteActionPerformed
+        jTextPane1.setText(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()));
+    }//GEN-LAST:event_jComboBoxSiteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        String URL = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        String URL = jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex());
         String novaURL = jTextPane1.getText();
-        String novaListaPalavras = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
-        String novaListaExtensoes = jComboBox3.getItemAt(jComboBox3.getSelectedIndex());
+        String novaListaPalavras = jComboBoxPalavras.getItemAt(jComboBoxPalavras.getSelectedIndex());
+        String novaListaExtensoes = jComboBoxExtensoes.getItemAt(jComboBoxExtensoes.getSelectedIndex());
         int intervaloConsulta = jSlider1.getValue();
 
         if (!URL.isEmpty() && !novaURL.isEmpty() && !novaListaPalavras.isEmpty() && !novaListaExtensoes.isEmpty()) {
@@ -283,9 +283,9 @@ public class EditarSite extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxExtensoes;
+    private javax.swing.JComboBox<String> jComboBoxPalavras;
+    private javax.swing.JComboBox<String> jComboBoxSite;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

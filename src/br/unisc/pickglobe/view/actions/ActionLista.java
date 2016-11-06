@@ -28,7 +28,7 @@ public class ActionLista extends Action {
     private final PalavraJpaController palavraJpaController;
 
     public ActionLista() {
-        this.palavraJpaController = new PalavraJpaController(emf);;
+        this.palavraJpaController = new PalavraJpaController(emf);
     }
 
     public void deletarLista(String nomeLista) {

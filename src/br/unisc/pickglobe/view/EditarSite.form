@@ -43,11 +43,11 @@
                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jComboBox1" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
+                                          <Component id="jComboBoxPalavras" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jComboBox2" min="-2" pref="250" max="-2" attributes="0"/>
+                                              <Component id="jComboBoxSite" min="-2" pref="250" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
@@ -65,7 +65,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                          <Component id="jComboBox3" max="32767" attributes="0"/>
+                                          <Component id="jComboBoxExtensoes" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -85,17 +85,17 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxSite" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxPalavras" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBoxExtensoes" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="19" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -126,9 +126,9 @@
         <Property name="text" type="java.lang.String" value="Site:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="jComboBoxPalavras">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem1 = action.getNomeListas();&#xa;&#xa;for(ComboItem item : listaComboItem1) {&#xa;    jComboBox1.addItem(item.toString());&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem1 = action.getNomeListas();&#xa;&#xa;for(ComboItem item : listaComboItem1) {&#xa;    jComboBoxPalavras.addItem(item.toString());&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
@@ -137,12 +137,12 @@
         <Property name="text" type="java.lang.String" value="Lista de palavras: "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox2">
+    <Component class="javax.swing.JComboBox" name="jComboBoxSite">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxSiteActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem2 = action.getNomeSites();&#xa;&#xa;for(ComboItem item : listaComboItem2) {&#xa;    jComboBox2.addItem(item.toString());&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem2 = action.getNomeSites();&#xa;&#xa;for(ComboItem item : listaComboItem2) {&#xa;    jComboBoxSite.addItem(item.toString());&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
@@ -168,7 +168,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextPane" name="jTextPane1">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextPane1.setText(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextPane1.setText(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()));"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -207,15 +207,15 @@
         <Property name="text" type="java.lang.String" value="Lista de extens&#xf5;es:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox3">
+    <Component class="javax.swing.JComboBox" name="jComboBoxExtensoes">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex())))" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(action.getNomeExtensoes(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())))" type="code"/>
         </Property>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="*/"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem3 = action.getNomeExtensoes(jComboBox2.getItemAt(jComboBox2.getSelectedIndex()));&#xa;&#xa;for(ComboItem item : listaComboItem3) {&#xa;    jComboBox3.addItem(item.toString());&#xa;}&#xa;/*"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="List&lt;ComboItem&gt; listaComboItem3 = action.getNomeExtensoes(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex()));&#xa;&#xa;for(ComboItem item : listaComboItem3) {&#xa;    jComboBoxExtensoes.addItem(item.toString());&#xa;}&#xa;/*"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
