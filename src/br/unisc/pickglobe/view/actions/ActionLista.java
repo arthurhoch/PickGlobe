@@ -117,6 +117,7 @@ public class ActionLista extends Action {
             List<Palavra> palavras = new LinkedList<>();
             br = new BufferedReader(new FileReader(arquivoPalavras));
             String palavra;
+            br.readLine();
             while ((palavra = br.readLine()) != null) {
                 Palavra p = new Palavra();
                 p.setPalavra(palavra);

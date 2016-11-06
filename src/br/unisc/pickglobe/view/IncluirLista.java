@@ -242,9 +242,9 @@ public class IncluirLista extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String nomeLista = jTextPane1.getText();
-        String arquivoPalavras = jTextPane2.getText();
-        String tipo = buttonGroup1.getSelection().getActionCommand();
-
+        String arquivoPalavras = jTextPane3.getText();
+        String tipo = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
+        
         if (!nomeLista.isEmpty() && !arquivoPalavras.isEmpty() && !tipo.isEmpty()) {
             action.criarListaArquivo(nomeLista, arquivoPalavras, tipo);
             this.dispose();

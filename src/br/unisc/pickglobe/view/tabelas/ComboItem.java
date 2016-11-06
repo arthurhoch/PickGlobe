@@ -9,31 +9,26 @@ package br.unisc.pickglobe.view.tabelas;
  *
  * @author arthurhoch
  */
-public class ComboItem
-{
+public class ComboItem {
+
     private final String value;
     private final String key;
-    
 
-    public ComboItem(String key, String value)
-    {
+    public ComboItem(String key, String value) {
         this.key = key;
         this.value = value;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return value;
     }
 
-    public String getKey()
-    {
+    public String getKey() {
         return key;
     }
 
-    public String getValue()
-    {
+    public String getValue() {
         return value;
     }
 }

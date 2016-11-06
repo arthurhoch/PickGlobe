@@ -5,12 +5,11 @@
  */
 package br.unisc.pickglobe.view;
 
+import br.unisc.pickglobe.core.Agenda;
 import br.unisc.pickglobe.view.actions.ActionPrincipal;
+import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -18,10 +17,13 @@ import javax.swing.event.TableModelListener;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
 
-    private static String STATUS = "Continuar";
+    private static String STATUS = "Pausar";
     private final ActionPrincipal action;
 
-    private static SitesUsados model;
+    private static SitesUsados modelSitesUsados;
+    private static FilaExecucao modelFilaExecucao;
+
+    private static Agenda agenda;
 
     /**
      * Creates new form TelaPrincipal
@@ -33,17 +35,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void initVariables() {
-        model = new SitesUsados();
+        modelSitesUsados = new SitesUsados();
         //método no modelo que retorna os meus registros no BD
-        model.fillingRows();
+        modelSitesUsados.fillingRows();
         //seto a tabela com o NOSSO modelo
-        jTableSitesUsados.setModel(model);
+        jTableSitesUsados.setModel(modelSitesUsados);
         //Adiciona o sorter que foi criado em NOSSO modelo
         //if(model.getAllExits().isEmpty()){
         //     btnBaixar.setEnabled(false);
         // }else
         //     model.requestFocusForFirstLine(tblSaidas);
-        
+
+        modelFilaExecucao = new FilaExecucao();
+        modelFilaExecucao.fillingRows();
+        jTablefilaExecucao.setModel(modelFilaExecucao);
+
+        TelaPrincipal.agenda = new Agenda(modelFilaExecucao, jLabelStatus);
     }
 
     /**
@@ -58,13 +65,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSitesUsados = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTablefilaExecucao = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelStatus = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -92,34 +99,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableSitesUsados);
         jTableSitesUsados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTablefilaExecucao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Site", "Tempo restante verificação"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-        }
+        ));
+        jScrollPane2.setViewportView(jTablefilaExecucao);
 
         jLabel1.setText("Fila de execução");
 
@@ -127,10 +115,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel3.setText("Site sendo analizado no momento: ");
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setText(" ...");
+        jLabelStatus.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelStatus.setText(" ...");
 
-        jToggleButton1.setText("Pausar");
+        jToggleButton1.setText("Continuar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
@@ -227,7 +215,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -256,7 +244,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabelStatus)
                     .addComponent(jLabel3)))
         );
 
@@ -270,11 +258,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String statusAtual = jToggleButton1.getText();
         jToggleButton1.setText(STATUS);
         STATUS = statusAtual;
+
+        if (jToggleButton1.isSelected()) {
+            agenda.setRodando(true);
+            agenda.start();
+        } else {
+            agenda.setRodando(false);
+        }
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if (action.existeSites()) {
-            EditarSite editarSite = new EditarSite(model);
+            EditarSite editarSite = new EditarSite(modelSitesUsados, modelFilaExecucao);
             editarSite.setLocation(this.getX(), this.getY());
             editarSite.setVisible(rootPaneCheckingEnabled);
         } else {
@@ -284,7 +280,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         if (action.exiteListas() && action.exitesExtensoes()) {
-            IncluirSite incluirSite = new IncluirSite(model);
+            IncluirSite incluirSite = new IncluirSite(modelSitesUsados, modelFilaExecucao);
             incluirSite.setLocation(this.getX(), this.getY());
             incluirSite.setVisible(rootPaneCheckingEnabled);
         } else {
@@ -369,7 +365,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -381,8 +377,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTableSitesUsados;
+    private javax.swing.JTable jTablefilaExecucao;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

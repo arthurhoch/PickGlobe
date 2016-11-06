@@ -63,7 +63,7 @@ public class Site implements Serializable {
 
     public Site() {
     }
-
+    
     public Site(Integer codSite) {
         this.codSite = codSite;
     }
@@ -122,7 +122,15 @@ public class Site implements Serializable {
     public void setCodListaPalavras(ListaPalavras codListaPalavras) {
         this.codListaPalavras = codListaPalavras;
     }
+/*
+    public int getTempoRestante() {
+        return tempoRestante;
+    }
 
+    public void setTempoRestante(int tempoRestante) {
+        this.tempoRestante = tempoRestante;
+    }
+*/
     @XmlTransient
     public List<Coleta> getColetaList() {
         return coletaList;

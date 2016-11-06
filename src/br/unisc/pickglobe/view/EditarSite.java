@@ -8,6 +8,7 @@ package br.unisc.pickglobe.view;
 import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.actions.ActionSite;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
+import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,25 +20,28 @@ import javax.swing.JOptionPane;
 public class EditarSite extends javax.swing.JFrame {
 
     private final ActionSite action;
-    private final SitesUsados model;
+    private final SitesUsados siteUsados;
+    private final FilaExecucao filaExecucao;
 
     /**
      * Creates new form EditarSite
      *
-     * @param model
+     * @param siteUsados, FilaExecucao filaExecucao
      */
-    public EditarSite(SitesUsados model) {
+    public EditarSite(SitesUsados siteUsados, FilaExecucao filaExecucao) {
         this.action = new ActionSite();
         initComponents();
         initVariables();
-        this.model = model;
+        this.siteUsados = siteUsados;
+        this.filaExecucao = filaExecucao;
     }
 
     public EditarSite() {
         this.action = new ActionSite();
         initComponents();
         initVariables();
-        this.model = null;
+        this.siteUsados = null;
+        this.filaExecucao = null;
     }
 
     private void initVariables() {
@@ -213,7 +217,7 @@ public class EditarSite extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
         );
 
-        jSlider1.setMinimum(1);
+        jSlider1.setMinimum(60);
         jSlider1.setMaximum(172800);
         jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));
 
@@ -228,8 +232,10 @@ public class EditarSite extends javax.swing.JFrame {
         String siteDeletar = jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex());
         action.deletarSite(siteDeletar);
         jComboBoxSite.removeItemAt(jComboBoxSite.getSelectedIndex());
-        model.limpar();
-        model.fillingRows();
+        siteUsados.limpar();
+        filaExecucao.limpar();
+        siteUsados.fillingRows();
+        filaExecucao.fillingRows();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBoxSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSiteActionPerformed
@@ -246,8 +252,10 @@ public class EditarSite extends javax.swing.JFrame {
 
         if (!URL.isEmpty() && !novaURL.isEmpty() && !novaListaPalavras.isEmpty() && !novaListaExtensoes.isEmpty()) {
             Site s = action.atualizarSite(URL, novaURL, novaListaPalavras, novaListaExtensoes, intervaloConsulta);
-            model.limpar();
-            model.fillingRows();
+            siteUsados.limpar();
+            filaExecucao.limpar();
+            siteUsados.fillingRows();
+            filaExecucao.fillingRows();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Verifique os campos");

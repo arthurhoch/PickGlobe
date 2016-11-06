@@ -8,6 +8,7 @@ package br.unisc.pickglobe.view;
 import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.actions.ActionSite;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
+import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,23 +20,26 @@ import javax.swing.JOptionPane;
 public class IncluirSite extends javax.swing.JFrame {
 
     private final ActionSite action;
-    private final SitesUsados model;
+    private final SitesUsados sitesUsados;
+    private final FilaExecucao filaExecucao;
 
     /**
      * Creates new form InserirSite
      */
-    public IncluirSite(SitesUsados model) {
+    public IncluirSite(SitesUsados sitesUsados, FilaExecucao filaExecucao) {
         this.action = new ActionSite();
         initComponents();
         initVariables();
-        this.model = model;
+        this.sitesUsados = sitesUsados;
+        this.filaExecucao = filaExecucao;
     }
     
     public IncluirSite() {
         this.action = new ActionSite();
         initComponents();
         initVariables();
-        this.model = null;
+        this.sitesUsados = null;
+        this.filaExecucao = null;
     }
 
     private void initVariables() {
@@ -172,7 +176,7 @@ public class IncluirSite extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jSlider1.setMinimum(1);
+        jSlider1.setMinimum(60);
         jSlider1.setMaximum(172800);
         List<ComboItem> listaComboItemExtensoes = action.getNomeExtensoes();
         if (!listaComboItemExtensoes.isEmpty() && listaComboItemExtensoes!= null){
@@ -193,7 +197,8 @@ public class IncluirSite extends javax.swing.JFrame {
 
         if (!URL.isEmpty()) {
             Site s = action.criarSite(URL, nomeListaPalavras, nomeListaExtensoes, intervaloConsulta);
-            model.addSite(s);
+            sitesUsados.addSite(s);
+            filaExecucao.addSite(s);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Url invalida");
