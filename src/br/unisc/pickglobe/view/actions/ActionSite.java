@@ -64,5 +64,10 @@ public class ActionSite extends Action {
         }
         return site;
     }
+    
+    public int getSiteIntervalo(String URL) {
+        Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
+        return site.getIntervaloColeta();
+    }
 
 }

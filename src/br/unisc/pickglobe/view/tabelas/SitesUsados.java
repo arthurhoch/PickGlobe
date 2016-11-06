@@ -10,6 +10,9 @@ import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.actions.ActionSite;
 import java.awt.Dimension;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.CheckBox;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
@@ -19,6 +22,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -38,6 +43,32 @@ public class SitesUsados extends AbstractTableModel {
     public SitesUsados() {
         this.action = new ActionSite();
         this.siteJpaController = new SiteJpaController(action.getEmf());
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex == colunas.length-1) {
+            return Boolean.class;
+        }
+        return super.getColumnClass(columnIndex);
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == colunas.length-1;
+    }
+    
+    
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        try {
+            Site site = linhas.get(rowIndex);
+            site.setStatus((boolean) aValue);
+            siteJpaController.edit(site);
+        } catch (Exception ex) {
+            Logger.getLogger(SitesUsados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -209,7 +240,5 @@ public class SitesUsados extends AbstractTableModel {
     public void requestFocusForFirstLine(JTable table) {
         table.addRowSelectionInterval(0, 0);
     }
-    
-    
 
 }
