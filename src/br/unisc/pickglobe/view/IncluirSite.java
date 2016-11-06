@@ -5,8 +5,10 @@
  */
 package br.unisc.pickglobe.view;
 
+import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.actions.ActionSite;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
+import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,14 +19,23 @@ import javax.swing.JOptionPane;
 public class IncluirSite extends javax.swing.JFrame {
 
     private final ActionSite action;
+    private final SitesUsados model;
 
     /**
      * Creates new form InserirSite
      */
+    public IncluirSite(SitesUsados model) {
+        this.action = new ActionSite();
+        initComponents();
+        initVariables();
+        this.model = model;
+    }
+    
     public IncluirSite() {
         this.action = new ActionSite();
         initComponents();
         initVariables();
+        this.model = null;
     }
 
     private void initVariables() {
@@ -181,7 +192,8 @@ public class IncluirSite extends javax.swing.JFrame {
         int intervaloConsulta = jSlider1.getValue();
 
         if (!URL.isEmpty()) {
-            action.criarSite(URL, nomeListaPalavras, nomeListaExtensoes, intervaloConsulta);
+            Site s = action.criarSite(URL, nomeListaPalavras, nomeListaExtensoes, intervaloConsulta);
+            model.addSite(s);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Url invalida");

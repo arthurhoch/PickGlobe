@@ -5,8 +5,10 @@
  */
 package br.unisc.pickglobe.view;
 
+import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.actions.ActionSite;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
+import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,14 +19,25 @@ import javax.swing.JOptionPane;
 public class EditarSite extends javax.swing.JFrame {
 
     private final ActionSite action;
+    private final SitesUsados model;
 
     /**
      * Creates new form EditarSite
+     *
+     * @param model
      */
+    public EditarSite(SitesUsados model) {
+        this.action = new ActionSite();
+        initComponents();
+        initVariables();
+        this.model = model;
+    }
+
     public EditarSite() {
         this.action = new ActionSite();
         initComponents();
         initVariables();
+        this.model = null;
     }
 
     private void initVariables() {
@@ -216,6 +229,8 @@ public class EditarSite extends javax.swing.JFrame {
         String siteDeletar = jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex());
         action.deletarSite(siteDeletar);
         jComboBoxSite.removeItemAt(jComboBoxSite.getSelectedIndex());
+        model.limpar();
+        model.fillingRows();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBoxSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSiteActionPerformed
@@ -231,13 +246,15 @@ public class EditarSite extends javax.swing.JFrame {
         int intervaloConsulta = jSlider1.getValue();
 
         if (!URL.isEmpty() && !novaURL.isEmpty() && !novaListaPalavras.isEmpty() && !novaListaExtensoes.isEmpty()) {
-            action.atualizarSite(URL, novaURL, novaListaPalavras, novaListaExtensoes, intervaloConsulta);
+            Site s = action.atualizarSite(URL, novaURL, novaListaPalavras, novaListaExtensoes, intervaloConsulta);
+            model.limpar();
+            model.fillingRows();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Verifique os campos");
         }
 
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void handlerMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_handlerMoved

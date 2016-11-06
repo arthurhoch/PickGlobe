@@ -6,7 +6,11 @@
 package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionPrincipal;
+import br.unisc.pickglobe.view.tabelas.SitesUsados;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -16,6 +20,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private static String STATUS = "Continuar";
     private final ActionPrincipal action;
+
+    private static SitesUsados model;
 
     /**
      * Creates new form TelaPrincipal
@@ -27,7 +33,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void initVariables() {
-
+        model = new SitesUsados();
+        //método no modelo que retorna os meus registros no BD
+        model.fillingRows();
+        //seto a tabela com o NOSSO modelo
+        jTableSitesUsados.setModel(model);
+        //Adiciona o sorter que foi criado em NOSSO modelo
+        //if(model.getAllExits().isEmpty()){
+        //     btnBaixar.setEnabled(false);
+        // }else
+        //     model.requestFocusForFirstLine(tblSaidas);
+        
     }
 
     /**
@@ -40,7 +56,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableSitesUsados = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -64,36 +80,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Pick Globe");
         setName("telaPrincipal"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableSitesUsados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Site", "Lista de palavras", "Intervalor", "Habilitado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, true
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
+        ));
+        jTableSitesUsados.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(jTableSitesUsados);
+        jTableSitesUsados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,7 +274,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         if (action.existeSites()) {
-            EditarSite editarSite = new EditarSite();
+            EditarSite editarSite = new EditarSite(model);
             editarSite.setLocation(this.getX(), this.getY());
             editarSite.setVisible(rootPaneCheckingEnabled);
         } else {
@@ -286,10 +283,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        if(action.exiteListas() && action.exitesExtensoes()) {
-        IncluirSite incluirSite = new IncluirSite();
-        incluirSite.setLocation(this.getX(), this.getY());
-        incluirSite.setVisible(rootPaneCheckingEnabled);
+        if (action.exiteListas() && action.exitesExtensoes()) {
+            IncluirSite incluirSite = new IncluirSite(model);
+            incluirSite.setLocation(this.getX(), this.getY());
+            incluirSite.setVisible(rootPaneCheckingEnabled);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Adcione pelo menos uma lista e uma extensão antes de adicionar sites");
         }
@@ -322,10 +319,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        if(action.exitesExtensoes()) {
-        EditarExtensao editarExtensao = new EditarExtensao();
-        editarExtensao.setLocation(this.getX(), this.getY());
-        editarExtensao.setVisible(rootPaneCheckingEnabled);
+        if (action.exitesExtensoes()) {
+            EditarExtensao editarExtensao = new EditarExtensao();
+            editarExtensao.setLocation(this.getX(), this.getY());
+            editarExtensao.setVisible(rootPaneCheckingEnabled);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Adicione alguma lista de extensoes antes de tentar editar");
         }
@@ -384,8 +381,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableSitesUsados;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

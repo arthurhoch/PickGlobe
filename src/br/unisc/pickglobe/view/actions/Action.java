@@ -197,4 +197,8 @@ public class Action {
         return "Day " + day + " Hour " + hours + " Minute " + minute + " Seconds " + second;
     }
 
+    public EntityManagerFactory getEmf() {
+        return emf;
+    }
+    
 }

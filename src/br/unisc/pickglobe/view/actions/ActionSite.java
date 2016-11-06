@@ -18,8 +18,6 @@ import java.util.logging.Logger;
  */
 public class ActionSite extends Action {
 
-    
-
     public void deletarSite(String siteDeletar) {
         try {
             Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteDeletar));
@@ -29,7 +27,7 @@ public class ActionSite extends Action {
         }
     }
 
-    public void criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {
+    public Site criarSite(String URL, String nomeListaPalavras, String nomeListaExtensoes, int intervaloConsulta) {
         Site site = new Site();
 
         int keyListaExtensoes = getKeyComboNomeExtensoes(nomeListaExtensoes);
@@ -46,11 +44,14 @@ public class ActionSite extends Action {
         site.setIntervaloColeta(intervaloConsulta);
 
         siteJpacontroller.create(site);
+
+        return site;
     }
 
-    public void atualizarSite(String URL, String novaURL, String novaListaPalavras, String novaListaExtensoes, int intervaloConsulta) {
+    public Site atualizarSite(String URL, String novaURL, String novaListaPalavras, String novaListaExtensoes, int intervaloConsulta) {
+        Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
         try {
-            Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
+            
 
             site.setUrl(novaURL);
             site.setCodListaPalavras(listaPalavrasJpaController.findListaPalavras(getKeyComboNomeListasPalavras(novaListaPalavras)));
@@ -61,6 +62,7 @@ public class ActionSite extends Action {
         } catch (Exception ex) {
             Logger.getLogger(ActionSite.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return site;
     }
 
 }
