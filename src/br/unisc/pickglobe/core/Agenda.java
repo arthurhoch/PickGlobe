@@ -88,7 +88,7 @@ public class Agenda {
         java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
         coleta.setDate(date);
         java.sql.Time time = new java.sql.Time(calendar.getTime().getTime());
-        coleta.setDate(time);
+        coleta.setTime(time);
 
         List<Link> listaLinks = inutil.getLinksPage(site.getUrl(), site.getCodListaExtensoes().getExtensaoList());
         inutil.saveListLinks(listaLinks, PASTA);
@@ -99,14 +99,20 @@ public class Agenda {
 
         for (Link link : listaLinks) {
 
+            status.setText(link.getUrl());
+
             for (Palavra palavra : palavras) {
 
                 int quantidade = 0;
 
+                System.out.println(tipo);
+                
                 switch (tipo) {
                     case 1:
                     case 2:
+                        System.out.println("Quantidade : " + quantidade);
                         quantidade = inutil.contarPalavras(link, palavra.getPalavra());
+                        System.out.println("Quantidade : " + quantidade);
                         break;
                     case 3:
                         quantidade = inutil.contarPalavrasComcapitalizacao(link, palavra.getPalavra());
@@ -119,7 +125,14 @@ public class Agenda {
                         break;
 
                 }
-
+                
+                System.out.println("-----------------------------------------------------------------");
+                System.out.println("Tipo : " + site.getCodListaPalavras().getCodTipoLista().getTipo());
+                System.out.println("Palavar : " + palavra.getPalavra());
+                System.out.println("Link : " + link.getUrl());
+                System.out.println("Quantidade : " + quantidade);
+                System.out.println("-----------------------------------------------------------------");
+                
                 PalavraLink palavraLink = new PalavraLink();
                 palavraLink.setLink(link);
                 palavraLink.setPalavra(palavra);

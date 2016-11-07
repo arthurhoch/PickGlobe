@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -56,6 +57,7 @@ public class Link implements Serializable {
     private List<Coleta> coletaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "link")
     private List<PalavraLink> palavraLinkList;
+    @Transient
     private String pagina;
 
     public Link() {

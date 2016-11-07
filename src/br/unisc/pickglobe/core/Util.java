@@ -14,11 +14,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -91,12 +92,16 @@ public class Util {
 
     public int contarPalavras(Link link, String palavra) {
 
-        if (link.getPagina() == null) {
-            hasDownloaded(link);
-            return (int) Arrays.stream(link.getPagina().split("[ ,\\.]")).filter((String s) -> s.equals(palavra)).count();
+        palavra = "(" + palavra + ")";
+        
+        Matcher m = Pattern.compile(palavra, Pattern.DOTALL).matcher(link.getPagina());
+        int quantidade = 0;
+        while (m.find()) {
+            quantidade++;
         }
+        
+        return quantidade;
 
-        return 0;
     }
 
     public int contarPalavrasSemcapitalizacao(Link link, String palavra) {
