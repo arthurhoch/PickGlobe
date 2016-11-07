@@ -279,6 +279,7 @@ public class IncluirLista extends javax.swing.JFrame {
              this.dispose();
          }
         this.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
