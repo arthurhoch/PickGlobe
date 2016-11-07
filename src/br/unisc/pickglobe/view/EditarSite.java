@@ -57,9 +57,9 @@ public class EditarSite extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBoxPalavras = new javax.swing.JComboBox<>();
+        jComboBoxPalavras = new javax.swing.JComboBox<String>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxSite = new javax.swing.JComboBox<>();
+        jComboBoxSite = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,7 +69,7 @@ public class EditarSite extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBoxExtensoes = new javax.swing.JComboBox<>();
+        jComboBoxExtensoes = new javax.swing.JComboBox<String>();
         lblResultIntervalo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -222,6 +222,7 @@ public class EditarSite extends javax.swing.JFrame {
         jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
