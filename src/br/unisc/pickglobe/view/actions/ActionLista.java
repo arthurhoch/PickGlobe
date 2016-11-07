@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author arthurhoch
  */
-public class ActionLista extends Action {
+public class ActionLista extends ActionView {
 
     private final PalavraJpaController palavraJpaController;
 

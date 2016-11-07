@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author arthurhoch
  */
-public class ActionSite extends Action {
+public class ActionSite extends ActionView {
 
     public void deletarSite(String siteDeletar) {
         try {

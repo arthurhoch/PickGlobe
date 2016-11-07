@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author m93492
  */
-public class ActionExtensao extends Action {
+public class ActionExtensao extends ActionView {
 
     private final ExtensaoJpaController extensaoJpaController;
 

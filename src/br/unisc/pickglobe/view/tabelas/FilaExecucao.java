@@ -72,7 +72,7 @@ public class FilaExecucao extends AbstractTableModel {
                 return t.getTime();
             }
         }
-        return 0;
+        return -1;
     }
 
     public void setTempoRestante(int key, int tempo) {
@@ -80,6 +80,7 @@ public class FilaExecucao extends AbstractTableModel {
             Temporizador t = tempoRestante.get(i);
             if (t.getKey() == key) {
                 t.setTime(tempo);
+                System.out.println("time: " + t.getTime());
                 setValue(i, linhas.get(i));
             }
         }
@@ -92,7 +93,7 @@ public class FilaExecucao extends AbstractTableModel {
     public void setLinhas(List<Site> linhas) {
         linhas = linhas;
     }
-    
+
     @Override
     public String getColumnName(int columnIndex) {
         // Retorna o conteÃºdo do Array que possui o nome das colunas  
@@ -163,8 +164,15 @@ public class FilaExecucao extends AbstractTableModel {
             linhas = siteJpaController.findSiteEntities();
 
             linhas.stream().forEach((linha) -> {
-                tempoRestante.add(new Temporizador(linha.getCodSite(), linha.getIntervaloColeta()));
+
+                if (getTempoRestante(linha.getCodSite()) > 0) {
+                    setTempoRestante(linha.getCodSite(), linha.getIntervaloColeta());
+                } else {
+                    tempoRestante.add(new Temporizador(linha.getCodSite(), linha.getIntervaloColeta()));
+                }
             }); //addListaDeSaidas(linhas);
+
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao encher o table:" + e);
         }
@@ -228,6 +236,7 @@ public class FilaExecucao extends AbstractTableModel {
      * Método construído para atualizar algum registro que foi atualizado em
      * tempo de execução! Pego a linha e passo o objeto para poder atualizar o
      * model e a table.
+     *
      * @param row
      * @param s
      */

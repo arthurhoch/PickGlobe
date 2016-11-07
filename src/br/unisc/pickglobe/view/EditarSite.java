@@ -217,7 +217,7 @@ public class EditarSite extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
         );
 
-        jSlider1.setMinimum(60);
+        jSlider1.setMinimum(30);
         jSlider1.setMaximum(172800);
         jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));
 

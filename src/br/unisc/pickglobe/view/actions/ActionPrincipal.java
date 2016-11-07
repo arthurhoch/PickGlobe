@@ -10,7 +10,7 @@ package br.unisc.pickglobe.view.actions;
  *
  * @author arthurhoch
  */
-public class ActionPrincipal extends Action {
+public class ActionPrincipal extends ActionView {
     
 
 }

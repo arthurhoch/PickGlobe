@@ -176,7 +176,7 @@ public class IncluirSite extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jSlider1.setMinimum(60);
+        jSlider1.setMinimum(30);
         jSlider1.setMaximum(172800);
         List<ComboItem> listaComboItemExtensoes = action.getNomeExtensoes();
         if (!listaComboItemExtensoes.isEmpty() && listaComboItemExtensoes!= null){

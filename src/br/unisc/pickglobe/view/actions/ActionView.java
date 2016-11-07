@@ -24,7 +24,7 @@ import javax.persistence.Persistence;
  *
  * @author arthurhoch
  */
-public class Action {
+public class ActionView {
 
     protected final EntityManagerFactory emf;
     protected final ListaExtensoesJpaController listaExtensoesJpaController;
@@ -37,7 +37,7 @@ public class Action {
     protected final List<ComboItem> comboNomeSite;
     protected final List<ComboItem> comboTipoLista;
 
-    public Action() {
+    public ActionView() {
         this.emf = Persistence.createEntityManagerFactory("TrabalhoPGBDPU");
         
         this.listaExtensoesJpaController = new ListaExtensoesJpaController(emf);

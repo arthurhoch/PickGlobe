@@ -33,7 +33,7 @@ public class Util {
 
     private static final String NOME_PAGINA = "pagina.html";
 
-    public List getLinksPage(String url, List<Extensao> extensoes) {
+    public List<Link> getLinksPage(String url, List<Extensao> extensoes) {
         Document doc;
 
         List<Link> listaLinks = new LinkedList<>();

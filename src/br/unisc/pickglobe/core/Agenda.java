@@ -5,8 +5,12 @@
  */
 package br.unisc.pickglobe.core;
 
+import br.unisc.pickglobe.core.action.ActionCore;
+import br.unisc.pickglobe.model.Coleta;
+import br.unisc.pickglobe.model.Link;
 import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.tabelas.FilaExecucao;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManager;
@@ -24,18 +28,17 @@ public class Agenda {
     private final JLabel status;
     private boolean rodando;
     private final static int SLEEP_TIME = 1;
+    private final Md5helper md5;
+    private final Util inutil;
+    private final ActionCore action;
 
     public Agenda(FilaExecucao modelFilaExecucao, JLabel status) {
         this.modelFilaExecucao = modelFilaExecucao;
         this.rodando = false;
         this.status = status;
-        /*
-        List<Site> sites = modelFilaExecucao.getLinhas();
-        
-        for (Site site : sites) {
-            modelFilaExecucao.setTempoRestante(site.getCodSite(), 1);
-        }
-         */
+        this.md5 = new Md5helper();
+        this.inutil = new Util();
+        this.action = new ActionCore();
     }
 
     public void start() {
@@ -48,15 +51,18 @@ public class Agenda {
                         int key = site.getCodSite();
                         int novoTempo = modelFilaExecucao.getTempoRestante(key);
                         novoTempo -= SLEEP_TIME;
-                        
-                        if (novoTempo < 0) novoTempo = 0;
-                        
-                        
+
                         if (novoTempo == 0) {
+                            modelFilaExecucao.setTempoRestante(key, site.getIntervaloColeta());
                             coletarPalavras(site);
+                        } else {
+
+                            if (novoTempo < 0) {
+                                novoTempo = 0;
+                            }
+
+                            modelFilaExecucao.setTempoRestante(key, novoTempo);
                         }
-                        
-                        modelFilaExecucao.setTempoRestante(key, novoTempo);
                     }
                 }
 
@@ -67,11 +73,26 @@ public class Agenda {
         Thread thread = new Thread(runnable);
         thread.start();
     }
-    
+
     private void coletarPalavras(Site site) {
-        modelFilaExecucao.setTempoRestante(site.getCodSite(), site.getIntervaloColeta());
         status.setText(site.getUrl());
-        
+
+        Coleta coleta = new Coleta();
+        coleta.setCodSite(site);
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date date = new java.sql.Date(calendar.getTime().getTime());
+        coleta.setDate(date);
+        java.sql.Time time = new java.sql.Time(calendar.getTime().getTime());
+        coleta.setDate(time);
+
+        List<Link> listaLinks = inutil.getLinksPage(site.getUrl(), site.getCodListaExtensoes().getExtensaoList());
+
+        for (Link link : listaLinks) {
+            System.out.println(link.getUrl());
+        }
+
+        //action.createColeta(coleta);
+        status.setText("...");
     }
 
     public boolean isRodando() {
