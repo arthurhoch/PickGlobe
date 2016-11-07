@@ -6,7 +6,6 @@
 package br.unisc.pickglobe.main;
 
 import br.unisc.pickglobe.view.TelaPrincipal;
-import java.sql.SQLException;
 
 /**
  *
@@ -17,8 +16,8 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {    
-        
+    public static void main(String[] args) {
+
         TelaPrincipal tp = new TelaPrincipal();
         tp.setVisible(true);
 

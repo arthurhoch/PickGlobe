@@ -27,6 +27,7 @@ public class EditarSite extends javax.swing.JFrame {
      * Creates new form EditarSite
      *
      * @param siteUsados, FilaExecucao filaExecucao
+     * @param filaExecucao
      */
     public EditarSite(SitesUsados siteUsados, FilaExecucao filaExecucao) {
         this.action = new ActionSite();

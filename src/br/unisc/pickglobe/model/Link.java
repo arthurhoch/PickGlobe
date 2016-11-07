@@ -154,5 +154,5 @@ public class Link implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.Link[ codLink=" + codLink + " ]";
     }
-    
+
 }

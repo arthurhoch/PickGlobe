@@ -244,26 +244,26 @@ public class EditarLista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+
         String nomeLista = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         String listaAdd = jTextPane1.getText();
         String listaRm = jTextPane2.getText();
         String arquivoAdd = jTextPane3.getText();
 
-        if(listaAdd != null) {
+        if (listaAdd != null) {
             String[] palavras = listaAdd.split(";");
             action.addPalavras(nomeLista, palavras);
         }
-        
-        if(listaRm != null) {
+
+        if (listaRm != null) {
             String[] palavras = listaRm.split(";");
             action.rmPalavras(nomeLista, palavras);
         }
-  
-        if(arquivoAdd != null) {
+
+        if (arquivoAdd != null) {
             action.addArquivoPalavras(nomeLista, arquivoAdd);
         }
-        
+
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

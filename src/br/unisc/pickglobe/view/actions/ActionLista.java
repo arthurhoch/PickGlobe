@@ -43,9 +43,7 @@ public class ActionLista extends ActionView {
     }
 
     private void deletarListaPalavra(List<Palavra> palavras) {
-        System.out.println("Teste");
         for (Palavra palavra : palavras) {
-            System.out.println("Cod: " + palavra.getCodPalavra());
             try {
                 palavraJpaController.destroy(palavra.getCodPalavra());
             } catch (IllegalOrphanException | NonexistentEntityException ex) {

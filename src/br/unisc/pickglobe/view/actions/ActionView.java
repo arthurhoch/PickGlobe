@@ -39,7 +39,7 @@ public class ActionView {
 
     public ActionView() {
         this.emf = Persistence.createEntityManagerFactory("TrabalhoPGBDPU");
-        
+
         this.listaExtensoesJpaController = new ListaExtensoesJpaController(emf);
         this.listaPalavrasJpaController = new ListaPalavrasJpaController(emf);
         this.siteJpacontroller = new SiteJpaController(emf);
@@ -50,17 +50,17 @@ public class ActionView {
         this.comboNomeSite = new LinkedList<>();
         this.comboTipoLista = new LinkedList<>();
     }
-    
+
     public boolean existeSites() {
         List<Site> site = siteJpacontroller.findSiteEntities();
         return site.size() > 0;
     }
-    
+
     public boolean exitesExtensoes() {
         List<ListaExtensoes> listaExtensoes = listaExtensoesJpaController.findListaExtensoesEntities();
         return listaExtensoes.size() > 0;
     }
-    
+
     public boolean exiteListas() {
         List<ListaPalavras> listaPalavras = listaPalavrasJpaController.findListaPalavrasEntities();
         return listaPalavras.size() > 0;
@@ -104,26 +104,26 @@ public class ActionView {
 
         return comboNomeSite;
     }
-    
+
     public List<ComboItem> getNomeExtensoes(String siteUrl) {
         Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteUrl));
         String extensao = site.getCodListaExtensoes().getNomeListaExtensoes();
-        
+
         List<ComboItem> comboItem = getNomeExtensoes();
 
         return ordernarComboItem(comboItem, extensao);
     }
-    
+
     public List<ComboItem> getNomeListas(String siteUrl) {
         Site site = siteJpacontroller.findSite(getKeyComboNomeSite(siteUrl));
         String lista = site.getCodListaPalavras().getNomeLista();
-        
+
         List<ComboItem> comboItem = getNomeExtensoes();
 
         return ordernarComboItem(comboItem, lista);
-        
+
     }
-    
+
     private List<ComboItem> ordernarComboItem(List<ComboItem> comboItem, String primeiroItem) {
         for (int i = 0; i < comboItem.size(); i++) {
             ComboItem item = comboItem.get(i);
@@ -135,10 +135,10 @@ public class ActionView {
                 break;
             }
         }
-        
+
         return comboItem;
     }
-    
+
     public List<ComboItem> getNomeTipoLista() {
         List<TipoLista> listaTipoLista = tipoListaJpaController.findTipoListaEntities();
 
@@ -169,7 +169,7 @@ public class ActionView {
         }
         return 0;
     }
-    
+
     public int getKeyComboNomeSite(String value) {
         for (ComboItem item : comboNomeSite) {
             if (item.getValue().equals(value)) {
@@ -178,7 +178,7 @@ public class ActionView {
         }
         return 0;
     }
-    
+
     public int getKeyComboNomeListaTipo(String value) {
         for (ComboItem item : comboTipoLista) {
             if (item.getValue().equals(value)) {
@@ -200,5 +200,5 @@ public class ActionView {
     public EntityManagerFactory getEmf() {
         return emf;
     }
-    
+
 }

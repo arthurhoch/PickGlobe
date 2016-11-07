@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class IncluirExtensao extends javax.swing.JFrame {
 
-    private ActionExtensao action;
+    private final ActionExtensao action;
 
     /**
      * Creates new form IncluirExtensao
@@ -126,7 +126,7 @@ public class IncluirExtensao extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(rootPane, "Confira as informações");
         }
-            
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

@@ -244,5 +244,5 @@ public class SiteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

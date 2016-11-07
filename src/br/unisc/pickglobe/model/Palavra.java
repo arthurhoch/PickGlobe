@@ -119,5 +119,5 @@ public class Palavra implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.Palavra[ codPalavra=" + codPalavra + " ]";
     }
-    
+
 }

@@ -118,5 +118,5 @@ public class ListaExtensoes implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.ListaExtensoes[ codListaExtensoes=" + codListaExtensoes + " ]";
     }
-    
+
 }

@@ -130,7 +130,7 @@ public class EditarExtensao extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         String nomeLista = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
-        
+
         String listaExtensoes = jTextListaExtensoes.getText();
 
         if (!listaExtensoes.isEmpty()) {
@@ -146,7 +146,7 @@ public class EditarExtensao extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int selected = jComboBox1.getSelectedIndex();
-        
+
         String nomeLista = jComboBox1.getItemAt(selected);
         jComboBox1.removeItemAt(selected);
         action.deletarListaExtensao(nomeLista);

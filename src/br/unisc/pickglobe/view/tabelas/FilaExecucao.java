@@ -27,10 +27,10 @@ import javax.swing.table.TableRowSorter;
  */
 public class FilaExecucao extends AbstractTableModel {
 
-    private ActionSite action;
-    private SiteJpaController siteJpaController;
+    private final ActionSite action;
+    private final SiteJpaController siteJpaController;
     private static List<Site> linhas;
-    private List<Temporizador> tempoRestante;
+    private final List<Temporizador> tempoRestante;
 
     private final String[] colunas = {"Site", "TempoRestante"};
     private TableRowSorter<SitesUsados> sorter;
@@ -80,7 +80,6 @@ public class FilaExecucao extends AbstractTableModel {
             Temporizador t = tempoRestante.get(i);
             if (t.getKey() == key) {
                 t.setTime(tempo);
-                System.out.println("time: " + t.getTime());
                 setValue(i, linhas.get(i));
             }
         }
@@ -91,7 +90,7 @@ public class FilaExecucao extends AbstractTableModel {
     }
 
     public void setLinhas(List<Site> linhas) {
-        linhas = linhas;
+        FilaExecucao.linhas = linhas;
     }
 
     @Override
@@ -172,11 +171,20 @@ public class FilaExecucao extends AbstractTableModel {
                 }
             }); //addListaDeSaidas(linhas);
 
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao encher o table:" + e);
         }
         return linhas;
+    }
+
+    public void setStatus(int codSite, boolean status) {
+
+        for (Site site : linhas) {
+            if (site.getCodSite() == codSite) {
+                site.setStatus(status);
+            }
+        }
+
     }
 
     public void sorter(JTable table, final JTextField filterText, SitesUsados model) {

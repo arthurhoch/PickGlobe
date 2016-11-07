@@ -33,7 +33,7 @@ public class IncluirSite extends javax.swing.JFrame {
         this.sitesUsados = sitesUsados;
         this.filaExecucao = filaExecucao;
     }
-    
+
     public IncluirSite() {
         this.action = new ActionSite();
         initComponents();

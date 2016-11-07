@@ -135,5 +135,5 @@ public class ListaPalavras implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.ListaPalavras[ codListaPalavras=" + codListaPalavras + " ]";
     }
-    
+
 }

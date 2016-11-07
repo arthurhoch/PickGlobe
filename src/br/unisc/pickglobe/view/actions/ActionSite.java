@@ -51,7 +51,6 @@ public class ActionSite extends ActionView {
     public Site atualizarSite(String URL, String novaURL, String novaListaPalavras, String novaListaExtensoes, int intervaloConsulta) {
         Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
         try {
-            
 
             site.setUrl(novaURL);
             site.setCodListaPalavras(listaPalavrasJpaController.findListaPalavras(getKeyComboNomeListasPalavras(novaListaPalavras)));
@@ -64,7 +63,7 @@ public class ActionSite extends ActionView {
         }
         return site;
     }
-    
+
     public int getSiteIntervalo(String URL) {
         Site site = siteJpacontroller.findSite(getKeyComboNomeSite(URL));
         return site.getIntervaloColeta();

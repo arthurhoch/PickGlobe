@@ -35,20 +35,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     private void initVariables() {
-        modelSitesUsados = new SitesUsados();
-        //método no modelo que retorna os meus registros no BD
-        modelSitesUsados.fillingRows();
-        //seto a tabela com o NOSSO modelo
-        jTableSitesUsados.setModel(modelSitesUsados);
-        //Adiciona o sorter que foi criado em NOSSO modelo
-        //if(model.getAllExits().isEmpty()){
-        //     btnBaixar.setEnabled(false);
-        // }else
-        //     model.requestFocusForFirstLine(tblSaidas);
 
+        //Criar filaExecucao antes!!!
         modelFilaExecucao = new FilaExecucao();
         modelFilaExecucao.fillingRows();
         jTablefilaExecucao.setModel(modelFilaExecucao);
+
+        modelSitesUsados = new SitesUsados(modelFilaExecucao);
+        modelSitesUsados.fillingRows();
+        jTableSitesUsados.setModel(modelSitesUsados);
 
         TelaPrincipal.agenda = new Agenda(modelFilaExecucao, jLabelStatus);
     }

@@ -5,7 +5,6 @@
  */
 package br.unisc.pickglobe.core;
 
-
 import br.unisc.pickglobe.model.Extensao;
 import br.unisc.pickglobe.model.Link;
 import java.io.BufferedReader;
@@ -78,6 +77,7 @@ public class Util {
             md5String = md5.string2md5(link.getUrl());
 
             if (md5String != null) {
+                link.setMd5(md5String);
 
                 if (link.getCaminho() == null) {
                     link.setCaminho("./" + folderName + "/" + md5String + "/");
@@ -98,8 +98,22 @@ public class Util {
 
         return 0;
     }
-    
+
     public int contarPalavrasSemcapitalizacao(Link link, String palavra) {
+
+        int total = 0;
+
+        if (link.getPagina() == null) {
+            hasDownloaded(link);
+
+            desCapitalizar(palavra);
+            total += contarPalavras(link, palavra);
+        }
+
+        return total;
+    }
+
+    public int contarPalavrasComcapitalizacao(Link link, String palavra) {
 
         int total = 0;
 
@@ -108,8 +122,6 @@ public class Util {
 
             capitalizar(palavra);
             total = contarPalavras(link, palavra);
-            desCapitalizar(palavra);
-            total += contarPalavras(link, palavra);
         }
 
         return total;

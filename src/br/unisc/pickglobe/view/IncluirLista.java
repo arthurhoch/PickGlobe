@@ -7,7 +7,6 @@ package br.unisc.pickglobe.view;
 
 import br.unisc.pickglobe.view.actions.ActionLista;
 import br.unisc.pickglobe.view.tabelas.ComboItem;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -257,7 +256,7 @@ public class IncluirLista extends javax.swing.JFrame {
         String nomeLista = jTextPane1.getText();
         String arquivoPalavras = jTextPane3.getText();
         String tipo = jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
-        
+
         if (!nomeLista.isEmpty() && !arquivoPalavras.isEmpty() && !tipo.isEmpty()) {
             action.criarListaArquivo(nomeLista, arquivoPalavras, tipo);
             this.dispose();
@@ -270,16 +269,16 @@ public class IncluirLista extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(null); 
-        
-         if(returnVal == JFileChooser.APPROVE_OPTION) { 
-             File arq = fc.getSelectedFile().getAbsoluteFile();
-             String caminho = arq.getAbsolutePath();
-             jTextPane3.setText(caminho);
-             this.dispose();
-         }
+        int returnVal = fc.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File arq = fc.getSelectedFile().getAbsoluteFile();
+            String caminho = arq.getAbsolutePath();
+            jTextPane3.setText(caminho);
+            this.dispose();
+        }
         this.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

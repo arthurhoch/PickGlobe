@@ -207,5 +207,5 @@ public class PalavraLinkJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

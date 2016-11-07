@@ -226,5 +226,5 @@ public class ListaExtensoesJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

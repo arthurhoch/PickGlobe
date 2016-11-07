@@ -8,14 +8,13 @@ package br.unisc.pickglobe.core;
 import br.unisc.pickglobe.core.action.ActionCore;
 import br.unisc.pickglobe.model.Coleta;
 import br.unisc.pickglobe.model.Link;
+import br.unisc.pickglobe.model.Palavra;
+import br.unisc.pickglobe.model.PalavraLink;
 import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JLabel;
 
 /**
@@ -23,6 +22,8 @@ import javax.swing.JLabel;
  * @author arthurhoch
  */
 public class Agenda {
+
+    private static final String PASTA = "downloads";
 
     private final FilaExecucao modelFilaExecucao;
     private final JLabel status;
@@ -48,20 +49,24 @@ public class Agenda {
                     List<Site> sites = modelFilaExecucao.getLinhas();
                     TimeUnit.SECONDS.sleep(SLEEP_TIME);
                     for (Site site : sites) {
-                        int key = site.getCodSite();
-                        int novoTempo = modelFilaExecucao.getTempoRestante(key);
-                        novoTempo -= SLEEP_TIME;
 
-                        if (novoTempo == 0) {
-                            modelFilaExecucao.setTempoRestante(key, site.getIntervaloColeta());
-                            coletarPalavras(site);
-                        } else {
+                        if (site.getStatus()) {
 
-                            if (novoTempo < 0) {
-                                novoTempo = 0;
+                            int key = site.getCodSite();
+                            int novoTempo = modelFilaExecucao.getTempoRestante(key);
+                            novoTempo -= SLEEP_TIME;
+
+                            if (novoTempo == 0) {
+                                modelFilaExecucao.setTempoRestante(key, site.getIntervaloColeta());
+                                coletarPalavras(site);
+                            } else {
+
+                                if (novoTempo < 0) {
+                                    novoTempo = 0;
+                                }
+
+                                modelFilaExecucao.setTempoRestante(key, novoTempo);
                             }
-
-                            modelFilaExecucao.setTempoRestante(key, novoTempo);
                         }
                     }
                 }
@@ -86,12 +91,48 @@ public class Agenda {
         coleta.setDate(time);
 
         List<Link> listaLinks = inutil.getLinksPage(site.getUrl(), site.getCodListaExtensoes().getExtensaoList());
+        inutil.saveListLinks(listaLinks, PASTA);
+
+        List<Palavra> palavras = site.getCodListaPalavras().getPalavraList();
+
+        int tipo = site.getCodListaPalavras().getCodTipoLista().getCodTipoLista();
 
         for (Link link : listaLinks) {
-            System.out.println(link.getUrl());
+
+            for (Palavra palavra : palavras) {
+
+                int quantidade = 0;
+
+                switch (tipo) {
+                    case 1:
+                    case 2:
+                        quantidade = inutil.contarPalavras(link, palavra.getPalavra());
+                        break;
+                    case 3:
+                        quantidade = inutil.contarPalavrasComcapitalizacao(link, palavra.getPalavra());
+                        break;
+                    case 4:
+                        quantidade = inutil.contarPalavrasSemcapitalizacao(link, palavra.getPalavra());
+                        break;
+                    default:
+                        quantidade = inutil.contarPalavras(link, palavra.getPalavra());
+                        break;
+
+                }
+
+                PalavraLink palavraLink = new PalavraLink();
+                palavraLink.setLink(link);
+                palavraLink.setPalavra(palavra);
+                palavraLink.setQuantidade(quantidade);
+
+                action.createLink(link);
+                action.createPalavraLink(palavraLink);
+            }
         }
 
-        //action.createColeta(coleta);
+        coleta.setLinkList(listaLinks);
+        action.createColeta(coleta);
+
         status.setText("...");
     }
 
@@ -102,20 +143,4 @@ public class Agenda {
     public void setRodando(boolean rodando) {
         this.rodando = rodando;
     }
-
-    public void persist(Object object) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TrabalhoPGBDPU");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        try {
-            em.persist(object);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-    }
-
 }

@@ -35,14 +35,17 @@ public class SitesUsados extends AbstractTableModel {
     private final String[] colunas = {"Site", "Lista palavras", "Intervalo", "Habilitado"};
     private TableRowSorter<SitesUsados> sorter;
 
-    public SitesUsados() {
+    private final FilaExecucao filaExecucao;
+
+    public SitesUsados(FilaExecucao filaExecucao) {
         this.action = new ActionSite();
         this.siteJpaController = new SiteJpaController(action.getEmf());
+        this.filaExecucao = filaExecucao;
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == colunas.length-1) {
+        if (columnIndex == colunas.length - 1) {
             return Boolean.class;
         }
         return super.getColumnClass(columnIndex);
@@ -50,17 +53,17 @@ public class SitesUsados extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == colunas.length-1;
+        return columnIndex == colunas.length - 1;
     }
-    
-    
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         try {
+            boolean status = (boolean) aValue;
             Site site = linhas.get(rowIndex);
-            site.setStatus((boolean) aValue);
+            site.setStatus(status);
             siteJpaController.edit(site);
+            filaExecucao.setStatus(site.getCodSite(), status);
         } catch (Exception ex) {
             Logger.getLogger(SitesUsados.class.getName()).log(Level.SEVERE, null, ex);
         }
