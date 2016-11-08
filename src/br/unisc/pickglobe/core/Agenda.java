@@ -99,54 +99,57 @@ public class Agenda {
 
         for (Link link : listaLinks) {
 
-            status.setText(link.getUrl());
+            if (action.checkSiteIn(link.getMd5())) {
 
-            for (Palavra palavra : palavras) {
+                status.setText(link.getUrl());
 
-                int quantidade = 0;
+                for (Palavra palavra : palavras) {
 
-                System.out.println(tipo);
-                
-                switch (tipo) {
-                    case 1:
-                    case 2:
-                        System.out.println("Quantidade : " + quantidade);
-                        quantidade = inutil.contarPalavras(link, palavra.getPalavra());
-                        System.out.println("Quantidade : " + quantidade);
-                        break;
-                    case 3:
-                        quantidade = inutil.contarPalavrasComcapitalizacao(link, palavra.getPalavra());
-                        break;
-                    case 4:
-                        quantidade = inutil.contarPalavrasSemcapitalizacao(link, palavra.getPalavra());
-                        break;
-                    default:
-                        quantidade = inutil.contarPalavras(link, palavra.getPalavra());
-                        break;
+                    int quantidade = 0;
 
+                    System.out.println(tipo);
+
+                    switch (tipo) {
+                        case 1:
+                        case 2:
+                            System.out.println("Quantidade : " + quantidade);
+                            quantidade = inutil.contarPalavras(link, palavra.getPalavra());
+                            System.out.println("Quantidade : " + quantidade);
+                            break;
+                        case 3:
+                            quantidade = inutil.contarPalavrasComcapitalizacao(link, palavra.getPalavra());
+                            break;
+                        case 4:
+                            quantidade = inutil.contarPalavrasSemcapitalizacao(link, palavra.getPalavra());
+                            break;
+                        default:
+                            quantidade = inutil.contarPalavras(link, palavra.getPalavra());
+                            break;
+
+                    }
+
+                    System.out.println("-----------------------------------------------------------------");
+                    System.out.println("Tipo : " + site.getCodListaPalavras().getCodTipoLista().getTipo());
+                    System.out.println("Palavar : " + palavra.getPalavra());
+                    System.out.println("Link : " + link.getUrl());
+                    System.out.println("Quantidade : " + quantidade);
+                    System.out.println("-----------------------------------------------------------------");
+
+                    PalavraLink palavraLink = new PalavraLink();
+                    palavraLink.setLink(link);
+                    palavraLink.setPalavra(palavra);
+                    palavraLink.setQuantidade(quantidade);
+
+                    action.createLink(link);
+                    action.createPalavraLink(palavraLink);
                 }
-                
-                System.out.println("-----------------------------------------------------------------");
-                System.out.println("Tipo : " + site.getCodListaPalavras().getCodTipoLista().getTipo());
-                System.out.println("Palavar : " + palavra.getPalavra());
-                System.out.println("Link : " + link.getUrl());
-                System.out.println("Quantidade : " + quantidade);
-                System.out.println("-----------------------------------------------------------------");
-                
-                PalavraLink palavraLink = new PalavraLink();
-                palavraLink.setLink(link);
-                palavraLink.setPalavra(palavra);
-                palavraLink.setQuantidade(quantidade);
-
-                action.createLink(link);
-                action.createPalavraLink(palavraLink);
             }
+
+            coleta.setLinkList(listaLinks);
+            action.createColeta(coleta);
+
+            status.setText("...");
         }
-
-        coleta.setLinkList(listaLinks);
-        action.createColeta(coleta);
-
-        status.setText("...");
     }
 
     public boolean isRodando() {

@@ -11,6 +11,7 @@ import br.unisc.pickglobe.controller.PalavraLinkJpaController;
 import br.unisc.pickglobe.model.Coleta;
 import br.unisc.pickglobe.model.Link;
 import br.unisc.pickglobe.model.PalavraLink;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -50,5 +51,16 @@ public class ActionCore {
             Logger.getLogger(ActionCore.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    public boolean checkSiteIn(String md5) {
+        List<Link> links = linkJpaController.findLinkEntities();
+        
+        for (Link link : links) {
+            if(link.getMd5().equals(md5))
+                return true;
+        }
+        
+        return false;
+    }
+        
 }
