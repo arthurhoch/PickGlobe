@@ -239,5 +239,5 @@ public class LinkJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

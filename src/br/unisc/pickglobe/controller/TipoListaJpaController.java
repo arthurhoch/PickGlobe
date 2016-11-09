@@ -186,5 +186,5 @@ public class TipoListaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

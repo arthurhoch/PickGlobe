@@ -255,5 +255,5 @@ public class ListaPalavrasJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

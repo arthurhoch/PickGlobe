@@ -113,7 +113,7 @@ public class Link implements Serializable {
     public void setPagina(String pagina) {
         this.pagina = pagina;
     }
-
+    
     @XmlTransient
     public List<Coleta> getColetaList() {
         return coletaList;
@@ -156,5 +156,5 @@ public class Link implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.Link[ codLink=" + codLink + " ]";
     }
-
+    
 }

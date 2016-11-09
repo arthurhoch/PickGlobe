@@ -106,5 +106,5 @@ public class TipoLista implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.TipoLista[ codTipoLista=" + codTipoLista + " ]";
     }
-
+    
 }

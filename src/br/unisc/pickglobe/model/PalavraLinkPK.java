@@ -76,5 +76,5 @@ public class PalavraLinkPK implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.PalavraLinkPK[ codPalavra=" + codPalavra + ", codLink=" + codLink + " ]";
     }
-
+    
 }

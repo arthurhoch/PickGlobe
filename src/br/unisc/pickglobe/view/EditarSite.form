@@ -153,7 +153,7 @@
         <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="handlerMoved"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jSlider1.setMinimum(30);&#xa;jSlider1.setMaximum(172800);&#xa;jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jSlider1.setMinimum(5);&#xa;jSlider1.setMaximum(172800);&#xa;jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));"/>
       </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

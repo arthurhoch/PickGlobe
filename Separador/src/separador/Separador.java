@@ -24,25 +24,26 @@ public class Separador {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         String nomeArquivoLer = "/home/arthurhoch/pt_BR.dic";
-        String nomeArquivoGravar = "/home/arthurhoch/pt_BR2.dic";
+        String nomeArquivoGravar = "/home/arthurhoch/pt_BR3.dic";
 
         BufferedReader br = new BufferedReader(new FileReader(nomeArquivoLer));
         BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivoGravar));
-        
+
         br.readLine();
 
         String line = "";
 
         while ((line = br.readLine()) != null) {
-            if (line.contains("/")) {
-                String[] palavras = line.split("/");
-                bw.write(palavras[0]);
-            } else {
-                bw.write(line);
+            if (!line.contains("-")) {
+                if (line.contains("/")) {
+                    String[] palavras = line.split("/");
+                    bw.write(palavras[0]);
+                } else {
+                    bw.write(line);
+                }
+                bw.write('\n');
+
             }
-            
-            bw.write('\n');
-            
 
         }
 

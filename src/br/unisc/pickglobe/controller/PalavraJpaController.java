@@ -239,5 +239,5 @@ public class PalavraJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

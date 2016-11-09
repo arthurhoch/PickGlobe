@@ -58,9 +58,9 @@ public class EditarSite extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBoxPalavras = new javax.swing.JComboBox<String>();
+        jComboBoxPalavras = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxSite = new javax.swing.JComboBox<String>();
+        jComboBoxSite = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,7 +70,7 @@ public class EditarSite extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBoxExtensoes = new javax.swing.JComboBox<String>();
+        jComboBoxExtensoes = new javax.swing.JComboBox<>();
         lblResultIntervalo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -218,7 +218,7 @@ public class EditarSite extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
         );
 
-        jSlider1.setMinimum(30);
+        jSlider1.setMinimum(5);
         jSlider1.setMaximum(172800);
         jSlider1.setValue(action.getSiteIntervalo(jComboBoxSite.getItemAt(jComboBoxSite.getSelectedIndex())));
 

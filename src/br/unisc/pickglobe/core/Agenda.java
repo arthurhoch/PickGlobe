@@ -13,6 +13,7 @@ import br.unisc.pickglobe.model.PalavraLink;
 import br.unisc.pickglobe.model.Site;
 import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JLabel;
@@ -91,6 +92,7 @@ public class Agenda {
         coleta.setTime(time);
 
         List<Link> listaLinks = inutil.getLinksPage(site.getUrl(), site.getCodListaExtensoes().getExtensaoList());
+        List<Link> listaLinksNovos = new LinkedList<>();
         inutil.saveListLinks(listaLinks, PASTA);
 
         List<Palavra> palavras = site.getCodListaPalavras().getPalavraList();
@@ -98,10 +100,14 @@ public class Agenda {
         int tipo = site.getCodListaPalavras().getCodTipoLista().getCodTipoLista();
 
         for (Link link : listaLinks) {
-
-            if (action.checkSiteIn(link.getMd5())) {
-
-                status.setText(link.getUrl());
+            
+            Link linkTemp = action.checkMd5(link);
+            if ((linkTemp) == null) {
+                
+                action.createLink(link);
+                listaLinksNovos.add(link);
+                
+                
 
                 for (Palavra palavra : palavras) {
 
@@ -112,9 +118,7 @@ public class Agenda {
                     switch (tipo) {
                         case 1:
                         case 2:
-                            System.out.println("Quantidade : " + quantidade);
                             quantidade = inutil.contarPalavras(link, palavra.getPalavra());
-                            System.out.println("Quantidade : " + quantidade);
                             break;
                         case 3:
                             quantidade = inutil.contarPalavrasComcapitalizacao(link, palavra.getPalavra());
@@ -128,28 +132,26 @@ public class Agenda {
 
                     }
 
-                    System.out.println("-----------------------------------------------------------------");
-                    System.out.println("Tipo : " + site.getCodListaPalavras().getCodTipoLista().getTipo());
-                    System.out.println("Palavar : " + palavra.getPalavra());
-                    System.out.println("Link : " + link.getUrl());
-                    System.out.println("Quantidade : " + quantidade);
-                    System.out.println("-----------------------------------------------------------------");
+                    status.setText(link.getUrl().substring(0, 30) + " (" + palavra.getPalavra() + ")");
 
                     PalavraLink palavraLink = new PalavraLink();
                     palavraLink.setLink(link);
                     palavraLink.setPalavra(palavra);
                     palavraLink.setQuantidade(quantidade);
 
-                    action.createLink(link);
                     action.createPalavraLink(palavraLink);
+
                 }
+            } else {
+                listaLinksNovos.add(linkTemp);
             }
-
-            coleta.setLinkList(listaLinks);
-            action.createColeta(coleta);
-
-            status.setText("...");
+            
         }
+
+        coleta.setLinkList(listaLinksNovos);
+        action.createColeta(coleta);
+
+        status.setText("...");
     }
 
     public boolean isRodando() {

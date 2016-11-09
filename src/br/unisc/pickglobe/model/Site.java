@@ -156,5 +156,5 @@ public class Site implements Serializable {
     public String toString() {
         return "br.unisc.pickglobe.model.Site[ codSite=" + codSite + " ]";
     }
-
+    
 }

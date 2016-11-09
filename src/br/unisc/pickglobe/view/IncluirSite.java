@@ -64,7 +64,7 @@ public class IncluirSite extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<String>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         lblShowInterval = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -176,7 +176,7 @@ public class IncluirSite extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jSlider1.setMinimum(30);
+        jSlider1.setMinimum(5);
         jSlider1.setMaximum(172800);
         List<ComboItem> listaComboItemExtensoes = action.getNomeExtensoes();
         if (!listaComboItemExtensoes.isEmpty() && listaComboItemExtensoes!= null){
