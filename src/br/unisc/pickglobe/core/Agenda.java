@@ -24,7 +24,7 @@ import javax.swing.JLabel;
  */
 public class Agenda {
 
-    private static final String PASTA = "downloads";
+    private static final String PASTA = "Downloads";
 
     private final FilaExecucao modelFilaExecucao;
     private final JLabel status;
@@ -34,6 +34,8 @@ public class Agenda {
     private final Util inutil;
     private final ActionCore action;
 
+    private boolean bloked;
+
     public Agenda(FilaExecucao modelFilaExecucao, JLabel status) {
         this.modelFilaExecucao = modelFilaExecucao;
         this.rodando = false;
@@ -41,12 +43,14 @@ public class Agenda {
         this.md5 = new Md5helper();
         this.inutil = new Util();
         this.action = new ActionCore();
+        this.bloked = false;
     }
 
     public void start() {
         Runnable runnable = () -> {
             try {
                 while (rodando) {
+                    bloked = true;
                     List<Site> sites = modelFilaExecucao.getLinhas();
                     TimeUnit.SECONDS.sleep(SLEEP_TIME);
                     for (Site site : sites) {
@@ -71,8 +75,9 @@ public class Agenda {
                         }
                     }
                 }
-
+                bloked = false;
             } catch (InterruptedException e) {
+                bloked = false;
             }
         };
 
@@ -100,20 +105,16 @@ public class Agenda {
         int tipo = site.getCodListaPalavras().getCodTipoLista().getCodTipoLista();
 
         for (Link link : listaLinks) {
-            
+
             Link linkTemp = action.checkMd5(link);
             if ((linkTemp) == null) {
-                
+
                 action.createLink(link);
                 listaLinksNovos.add(link);
-                
-                
 
                 for (Palavra palavra : palavras) {
 
                     int quantidade = 0;
-
-                    System.out.println(tipo);
 
                     switch (tipo) {
                         case 1:
@@ -145,7 +146,7 @@ public class Agenda {
             } else {
                 listaLinksNovos.add(linkTemp);
             }
-            
+
         }
 
         coleta.setLinkList(listaLinksNovos);
@@ -160,5 +161,13 @@ public class Agenda {
 
     public void setRodando(boolean rodando) {
         this.rodando = rodando;
+    }
+
+    public boolean isBloked() {
+        return bloked;
+    }
+
+    public void setBloked(boolean bloked) {
+        this.bloked = bloked;
     }
 }

@@ -49,6 +49,7 @@ public class ActionView {
         this.comboNomeExtensoes = new LinkedList<>();
         this.comboNomeSite = new LinkedList<>();
         this.comboTipoLista = new LinkedList<>();
+        
     }
 
     public boolean existeSites() {
@@ -194,7 +195,7 @@ public class ActionView {
         long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds) * 60);
         long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) * 60);
 
-        return "Day " + day + " Hour " + hours + " Minute " + minute + " Seconds " + second;
+        return day + " Day " + hours + " Hour " + minute + " Minute " + second + " Seconds ";
     }
 
     public EntityManagerFactory getEmf() {

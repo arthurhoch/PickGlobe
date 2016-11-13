@@ -122,6 +122,7 @@ public class FilaExecucao extends AbstractTableModel {
     /* Remove todos os registros. */
     public void limpar() {
         linhas.clear();
+        tempoRestante.clear();
         fireTableDataChanged();
     }
 

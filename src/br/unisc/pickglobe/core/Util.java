@@ -31,10 +31,13 @@ import org.jsoup.select.Elements;
  */
 public class Util {
 
-    private static final String NOME_PAGINA = "pagina.html";
+    private static final String FORMATO = ".html";
 
     public List<Link> getLinksPage(String url, List<Extensao> extensoes) {
         Document doc;
+
+        String https = "https://";
+        String http = "http://";
 
         List<Link> listaLinks = new LinkedList<>();
 
@@ -45,6 +48,10 @@ public class Util {
             for (Element link : links) {
                 asc = (link.attr("href"));
                 if (asc.contains("http")) {
+
+                    if (asc.startsWith(https)) {
+                        asc = asc.replaceFirst(https, http);
+                    }
 
                     boolean contem = false;
                     for (Extensao extensao : extensoes) {
@@ -81,7 +88,7 @@ public class Util {
                 link.setMd5(md5String);
 
                 if (link.getCaminho() == null) {
-                    link.setCaminho("./" + folderName + "/" + md5String + "/");
+                    link.setCaminho("./" + folderName + "/");
                 }
 
                 hasDownloaded(link);
@@ -93,13 +100,13 @@ public class Util {
     public int contarPalavras(Link link, String palavra) {
 
         palavra = "(" + palavra + ")";
-        
+
         Matcher m = Pattern.compile(palavra, Pattern.DOTALL).matcher(link.getPagina());
         int quantidade = 0;
         while (m.find()) {
             quantidade++;
         }
-        
+
         return quantidade;
 
     }
@@ -148,16 +155,20 @@ public class Util {
 
     private void saveWebpage(Link link) {
 
-        String caminho = link.getCaminho();
+        String diretorio = link.getCaminho();
         File f = new File(link.getCaminho());
 
         if (!f.exists() && !f.isDirectory()) {
+            f.mkdir();
+        }
 
+        String caminhoParaSalvar = diretorio + link.getMd5() + FORMATO;
+        f = new File(caminhoParaSalvar);
+
+        if (!f.exists() && !f.isFile()) {
             try {
 
-                f.mkdirs();
-
-                try (BufferedWriter br = new BufferedWriter(new FileWriter(caminho + NOME_PAGINA))) {
+                try (BufferedWriter br = new BufferedWriter(new FileWriter(caminhoParaSalvar))) {
                     br.write(link.getPagina());
                     br.newLine();
                     br.write("<!-- Url: " + link.getUrl() + " -->");
@@ -175,7 +186,7 @@ public class Util {
         if (link.getPagina() == null) {
 
             if (link.getCaminho() != null) {
-                File f = new File(link.getCaminho() + NOME_PAGINA);
+                File f = new File(link.getCaminho() + link.getMd5() + FORMATO);
                 if (f.exists() && !f.isDirectory()) {
 
                     String page = readFile(f);
