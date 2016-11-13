@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -28,6 +29,8 @@ public class Agenda {
 
     private final FilaExecucao modelFilaExecucao;
     private final JLabel status;
+    
+    private final JTextArea txtArea;
     private boolean rodando;
     private final static int SLEEP_TIME = 1;
     private final Md5helper md5;
@@ -36,10 +39,11 @@ public class Agenda {
 
     private boolean bloked;
 
-    public Agenda(FilaExecucao modelFilaExecucao, JLabel status) {
+    public Agenda(FilaExecucao modelFilaExecucao, JLabel status, JTextArea txtArea) {
         this.modelFilaExecucao = modelFilaExecucao;
         this.rodando = false;
         this.status = status;
+        this.txtArea = txtArea;
         this.md5 = new Md5helper();
         this.inutil = new Util();
         this.action = new ActionCore();
@@ -87,6 +91,7 @@ public class Agenda {
 
     private void coletarPalavras(Site site) {
         status.setText(site.getUrl());
+        txtArea.append(site.getUrl()+"\n");
 
         Coleta coleta = new Coleta();
         coleta.setCodSite(site);
@@ -135,6 +140,8 @@ public class Agenda {
 
                     status.setText(link.getUrl().substring(0, 30) + " (" + palavra.getPalavra() + ")");
 
+                    txtArea.append(link.getUrl().substring(0, 30) + " (" + palavra.getPalavra() + ")"+"\n");
+                    
                     PalavraLink palavraLink = new PalavraLink();
                     palavraLink.setLink(link);
                     palavraLink.setPalavra(palavra);
@@ -153,6 +160,7 @@ public class Agenda {
         action.createColeta(coleta);
 
         status.setText("...");
+        txtArea.setText("...");
     }
 
     public boolean isRodando() {
