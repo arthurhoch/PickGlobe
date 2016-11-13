@@ -45,21 +45,23 @@ public class ActionPrincipal extends ActionView {
     public void salvarHistorico(String input) throws IOException{
 
         JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(null);
-
+        int returnVal = fc.showSaveDialog(null);
         String cam = null;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File arq = fc.getSelectedFile().getAbsoluteFile();
             cam = arq.getAbsolutePath();
+            
+            FileWriter arq2 = new FileWriter(cam);
+        
+            PrintWriter gravarArq = new PrintWriter(arq2);
+
+
+            gravarArq.printf(input);
+
+            arq2.close();
         }
-        FileWriter arq = new FileWriter(cam);
         
-        PrintWriter gravarArq = new PrintWriter(arq);
-
         
-        gravarArq.printf(input);
-
-        arq.close();
     }
 
 }
