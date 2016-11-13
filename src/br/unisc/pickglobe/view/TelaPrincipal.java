@@ -9,6 +9,12 @@ import br.unisc.pickglobe.core.Agenda;
 import br.unisc.pickglobe.view.actions.ActionPrincipal;
 import br.unisc.pickglobe.view.tabelas.FilaExecucao;
 import br.unisc.pickglobe.view.tabelas.SitesUsados;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,6 +79,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jToggleButton2 = new javax.swing.JToggleButton();
+        jToggleButton3 = new javax.swing.JToggleButton();
+        lblcaminho = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -138,6 +147,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
         jTextArea1.setText("Historico\n\n");
+
+        jToggleButton2.setText("Limpar");
+
+        jToggleButton3.setText("Salvar");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Incluir");
 
@@ -225,7 +243,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jToggleButton2)
+                            .addComponent(jToggleButton3)
+                            .addComponent(lblcaminho))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -278,9 +302,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabelStatus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jToggleButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jToggleButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblcaminho)
+                        .addContainerGap(81, Short.MAX_VALUE))))
         );
 
         getAccessibleContext().setAccessibleName("PickGlobe");
@@ -373,6 +407,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        try {
+            action.salvarHistorico(jTextArea1.getText());
+        } catch (IOException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -437,5 +479,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable jTablefilaExecucao;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JLabel lblcaminho;
     // End of variables declaration//GEN-END:variables
 }
