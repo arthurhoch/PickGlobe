@@ -1,10 +1,23 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 arthurhoch
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package br.unisc.pickglobe.controller;
 
+import br.unisc.pickglobe.controller.exceptions.IllegalOrphanException;
 import br.unisc.pickglobe.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -65,7 +78,7 @@ public class TipoListaJpaController implements Serializable {
         }
     }
 
-    public void edit(TipoLista tipoLista) throws NonexistentEntityException, Exception {
+    public void edit(TipoLista tipoLista) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -73,6 +86,18 @@ public class TipoListaJpaController implements Serializable {
             TipoLista persistentTipoLista = em.find(TipoLista.class, tipoLista.getCodTipoLista());
             List<ListaPalavras> listaPalavrasListOld = persistentTipoLista.getListaPalavrasList();
             List<ListaPalavras> listaPalavrasListNew = tipoLista.getListaPalavrasList();
+            List<String> illegalOrphanMessages = null;
+            for (ListaPalavras listaPalavrasListOldListaPalavras : listaPalavrasListOld) {
+                if (!listaPalavrasListNew.contains(listaPalavrasListOldListaPalavras)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ListaPalavras " + listaPalavrasListOldListaPalavras + " since its codTipoLista field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             List<ListaPalavras> attachedListaPalavrasListNew = new ArrayList<ListaPalavras>();
             for (ListaPalavras listaPalavrasListNewListaPalavrasToAttach : listaPalavrasListNew) {
                 listaPalavrasListNewListaPalavrasToAttach = em.getReference(listaPalavrasListNewListaPalavrasToAttach.getClass(), listaPalavrasListNewListaPalavrasToAttach.getCodListaPalavras());
@@ -81,12 +106,6 @@ public class TipoListaJpaController implements Serializable {
             listaPalavrasListNew = attachedListaPalavrasListNew;
             tipoLista.setListaPalavrasList(listaPalavrasListNew);
             tipoLista = em.merge(tipoLista);
-            for (ListaPalavras listaPalavrasListOldListaPalavras : listaPalavrasListOld) {
-                if (!listaPalavrasListNew.contains(listaPalavrasListOldListaPalavras)) {
-                    listaPalavrasListOldListaPalavras.setCodTipoLista(null);
-                    listaPalavrasListOldListaPalavras = em.merge(listaPalavrasListOldListaPalavras);
-                }
-            }
             for (ListaPalavras listaPalavrasListNewListaPalavras : listaPalavrasListNew) {
                 if (!listaPalavrasListOld.contains(listaPalavrasListNewListaPalavras)) {
                     TipoLista oldCodTipoListaOfListaPalavrasListNewListaPalavras = listaPalavrasListNewListaPalavras.getCodTipoLista();
@@ -115,7 +134,7 @@ public class TipoListaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -127,10 +146,16 @@ public class TipoListaJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tipoLista with id " + id + " no longer exists.", enfe);
             }
-            List<ListaPalavras> listaPalavrasList = tipoLista.getListaPalavrasList();
-            for (ListaPalavras listaPalavrasListListaPalavras : listaPalavrasList) {
-                listaPalavrasListListaPalavras.setCodTipoLista(null);
-                listaPalavrasListListaPalavras = em.merge(listaPalavrasListListaPalavras);
+            List<String> illegalOrphanMessages = null;
+            List<ListaPalavras> listaPalavrasListOrphanCheck = tipoLista.getListaPalavrasList();
+            for (ListaPalavras listaPalavrasListOrphanCheckListaPalavras : listaPalavrasListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This TipoLista (" + tipoLista + ") cannot be destroyed since the ListaPalavras " + listaPalavrasListOrphanCheckListaPalavras + " in its listaPalavrasList field has a non-nullable codTipoLista field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(tipoLista);
             em.getTransaction().commit();

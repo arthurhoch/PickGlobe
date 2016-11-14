@@ -1,7 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 arthurhoch
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package br.unisc.pickglobe.model;
 
@@ -36,6 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Coleta.findAll", query = "SELECT c FROM Coleta c"),
     @NamedQuery(name = "Coleta.findByCodColeta", query = "SELECT c FROM Coleta c WHERE c.codColeta = :codColeta"),
+    @NamedQuery(name = "Coleta.findByMd5", query = "SELECT c FROM Coleta c WHERE c.md5 = :md5"),
     @NamedQuery(name = "Coleta.findByDate", query = "SELECT c FROM Coleta c WHERE c.date = :date"),
     @NamedQuery(name = "Coleta.findByTime", query = "SELECT c FROM Coleta c WHERE c.time = :time")})
 public class Coleta implements Serializable {
@@ -46,6 +59,9 @@ public class Coleta implements Serializable {
     @Basic(optional = false)
     @Column(name = "codColeta")
     private Integer codColeta;
+    @Basic(optional = false)
+    @Column(name = "md5")
+    private String md5;
     @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
@@ -70,8 +86,9 @@ public class Coleta implements Serializable {
         this.codColeta = codColeta;
     }
 
-    public Coleta(Integer codColeta, Date date, Date time) {
+    public Coleta(Integer codColeta, String md5, Date date, Date time) {
         this.codColeta = codColeta;
+        this.md5 = md5;
         this.date = date;
         this.time = time;
     }
@@ -82,6 +99,14 @@ public class Coleta implements Serializable {
 
     public void setCodColeta(Integer codColeta) {
         this.codColeta = codColeta;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
     }
 
     public Date getDate() {

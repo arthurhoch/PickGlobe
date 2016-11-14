@@ -1,7 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 arthurhoch
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package br.unisc.pickglobe.core;
 
@@ -29,7 +41,7 @@ public class Agenda {
 
     private final FilaExecucao modelFilaExecucao;
     private final JLabel status;
-    
+
     private final JTextArea txtArea;
     private boolean rodando;
     private final static int SLEEP_TIME = 1;
@@ -91,7 +103,7 @@ public class Agenda {
 
     private void coletarPalavras(Site site) {
         status.setText(site.getUrl());
-        txtArea.append(site.getUrl()+"\n");
+        txtArea.append("Analizando: " + site.getUrl() + "\n");
 
         Coleta coleta = new Coleta();
         coleta.setCodSite(site);
@@ -100,24 +112,34 @@ public class Agenda {
         coleta.setDate(date);
         java.sql.Time time = new java.sql.Time(calendar.getTime().getTime());
         coleta.setTime(time);
+        coleta.setMd5(md5.string2md5(coleta.getCodSite().getUrl()));
 
         List<Link> listaLinks = inutil.getLinksPage(site.getUrl(), site.getCodListaExtensoes().getExtensaoList());
-        List<Link> listaLinksNovos = new LinkedList<>();
-        inutil.saveListLinks(listaLinks, PASTA);
-
+        List<Link> novaListaLinks = new LinkedList<>();
+        inutil.saveListLinks(listaLinks, PASTA + "/" + coleta.getMd5());
+        txtArea.append("Baixando páginas 2º nível: " + site.getUrl() + "\n");
         List<Palavra> palavras = site.getCodListaPalavras().getPalavraList();
 
         int tipo = site.getCodListaPalavras().getCodTipoLista().getCodTipoLista();
 
+        txtArea.append("Contando palavras: " + site.getUrl() + "\n");
+
         for (Link link : listaLinks) {
 
-            Link linkTemp = action.checkMd5(link);
-            if ((linkTemp) == null) {
-
+            Link tempLink;
+            if ((tempLink = action.checkMd5(link)) == null) {
                 action.createLink(link);
-                listaLinksNovos.add(link);
+                novaListaLinks.add(link);
+            } else {
+                link = tempLink;
+                novaListaLinks.add(tempLink);
+            }
 
-                for (Palavra palavra : palavras) {
+            for (Palavra palavra : palavras) {
+
+                txtArea.append(link.getUrl() + " (" + palavra.getPalavra() + ")" + "\n");
+
+                if (action.temPalavra(palavra.getCodPalavra(), link.getPalavraLinkList())) {
 
                     int quantidade = 0;
 
@@ -137,11 +159,8 @@ public class Agenda {
                             break;
 
                     }
-
-                    status.setText(link.getUrl().substring(0, 30) + " (" + palavra.getPalavra() + ")");
-
-                    txtArea.append(link.getUrl().substring(0, 30) + " (" + palavra.getPalavra() + ")"+"\n");
                     
+                                    
                     PalavraLink palavraLink = new PalavraLink();
                     palavraLink.setLink(link);
                     palavraLink.setPalavra(palavra);
@@ -150,17 +169,14 @@ public class Agenda {
                     action.createPalavraLink(palavraLink);
 
                 }
-            } else {
-                listaLinksNovos.add(linkTemp);
             }
-
         }
 
-        coleta.setLinkList(listaLinksNovos);
+        coleta.setLinkList(novaListaLinks);
         action.createColeta(coleta);
 
+        txtArea.setText("");
         status.setText("...");
-        txtArea.setText("...");
     }
 
     public boolean isRodando() {
