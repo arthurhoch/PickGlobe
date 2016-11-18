@@ -135,9 +135,11 @@ public class Agenda {
                 novaListaLinks.add(tempLink);
             }
 
+            txtArea.append("Verificando: " + link.getUrl() + "\n");
+            
             for (Palavra palavra : palavras) {
 
-                txtArea.append(link.getUrl() + " (" + palavra.getPalavra() + ")" + "\n");
+                txtArea.append("Por: (" + palavra.getPalavra() + ")" + "\n");
 
                 if (action.temPalavra(palavra.getCodPalavra(), link.getPalavraLinkList())) {
 

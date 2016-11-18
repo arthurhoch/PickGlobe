@@ -56,7 +56,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblShowInterval" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jSlider1" alignment="0" pref="376" max="32767" attributes="0"/>
+                  <Component id="jSlider1" alignment="0" pref="1024" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>

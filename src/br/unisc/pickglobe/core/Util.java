@@ -195,7 +195,7 @@ public class Util {
     }
 
     private void hasDownloaded(Link link) {
-        if (link.getPagina() == null) {
+        while (link.getPagina() == null) {
 
             if (link.getCaminho() != null) {
                 File f = new File(link.getCaminho() + link.getMd5() + FORMATO);
